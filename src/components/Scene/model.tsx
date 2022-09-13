@@ -1,13 +1,13 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from 'three'
-import { useLoader, useThree } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
 import { animated, useSpring } from "@react-spring/three";
 import { useGesture } from "@use-gesture/react";
 import useStore from "../../store";
 import { isPointInSquare } from "../../helper/math";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 
-export const Model = ({url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo}: any) => {
+export const Model = ({url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id}: any) => {
     const model = useLoader( GLTFLoader, url ) as any
 
     const meshRef = useRef(null) as any
@@ -20,9 +20,6 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
     const currentPage = useStore((state: any) => state.currentPage)
 
     const focusInfo = useStore((state: any) => state.focusInfo)
-    const setFocusInfo = useStore((state: any) => state.setFocusInfo)
-
-    const { camera } = useThree()
 
     const getCurrentPosition = () => {
         const diffPageCount = page - currentPage
@@ -39,8 +36,6 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
     }
 
     const originPosition = getCurrentPosition()
-
-    const [ latestTap, setLatestTap ] = useState(0)
 
     useEffect(() => {
         if( !page ) return
@@ -140,44 +135,18 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
         document.body.style.cursor = ''
     }
 
-    const focusObject = (event: any) => {
-        event.stopPropagation()
-
-        const now = new Date().getTime()
-        const timeSince = now - latestTap
-        if((timeSince < 600) && (timeSince > 0)) {
-            const position = [
-                meshRef.current.position.x - meshPosition[0],
-                meshRef.current.position.y + meshPosition[1] * 2,
-                meshRef.current.position.z - meshPosition[2],
-            ]
-
-            const newInfo = {...focusInfo}
-            newInfo.isFocus = !focusInfo.isFocus
-            newInfo.position = position
-            newInfo.prevCamPosition = [ camera.position.x, camera.position.y, camera.position.z ]
-            newInfo.focusId = id
-            newInfo.detailInfo = modelInfo.details
-            setFocusInfo( newInfo )
-        }
-
-        setLatestTap( new Date().getTime() )
-    }
-
     return (
         currentPage === page && (!focusInfo.isFocus || focusInfo.focusId === id) ? (
             <animated.mesh 
-                {...focusObject}
                 { ...spring }
                 { ...bind() as any }
                 scale={ scale }
                 onPointerOver={ onPointerOverHandler } 
                 onPointerOut={ onPointerOutHandler }
                 ref={ meshRef }
-                onClick={ modelInfo.feather ? focusObject : null }
                 // rotation={[ 0, ang2Rad(90), 0 ]}
             >
-                <mesh position={meshPosition} onClick={ focusObject }>
+                <mesh position={meshPosition}>
                     <boxGeometry args={meshSize} />
                     <meshBasicMaterial color={'red'} transparent opacity={0.0}/>
                 </mesh>

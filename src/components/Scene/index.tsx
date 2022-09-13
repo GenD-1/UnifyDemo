@@ -1,4 +1,4 @@
-import { Canvas, useThree } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { ambientLightProps, backgroundColor, cameraProps, modelScaleValue, orbitControlProps, spotLightProps, spotLightProps2 } from '../../constants/scene'
 import useStore from '../../store'
 import { OrbitControls } from '@react-three/drei'
@@ -36,9 +36,23 @@ export const Scene = () => {
             />
 
             <spotLight
+                color={ spotLightProps.color }
+                castShadow={ spotLightProps.castShadow }
+                position={[ -spotLightProps.position.x, spotLightProps.position.y, -spotLightProps.position.z ]}
+                intensity={ spotLightProps.intensity }
+            />
+
+            <spotLight
                 color={ spotLightProps2.color }
                 castShadow={ spotLightProps2.castShadow }
                 position={[ -spotLightProps2.position.x, spotLightProps2.position.y, spotLightProps2.position.z ]}
+                intensity={ spotLightProps2.intensity }
+            />
+
+            <spotLight
+                color={ spotLightProps2.color }
+                castShadow={ spotLightProps2.castShadow }
+                position={[ -spotLightProps2.position.x, spotLightProps2.position.y, -spotLightProps2.position.z ]}
                 intensity={ spotLightProps2.intensity }
             />
 

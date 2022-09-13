@@ -12,7 +12,7 @@ export const cameraProps = {
     }
 }
 
-export const backgroundColor = 0xC9BCCB
+export const backgroundColor = 0xfcfcfc
 
 export const orbitControlProps = {
     target: [0, 0.08, 0],
@@ -44,7 +44,7 @@ export const directionalLightProps = {
 
 export const spotLightProps = {
     color: 0xcccccc,
-    intensity: 3,
+    intensity: 1,
     position: {
         x: -15,
         y: 0,
@@ -62,7 +62,7 @@ export const spotLightProps = {
 
 export const spotLightProps2 = {
     color: 0xcccccc,
-    intensity: 3,
+    intensity: 1,
     position: {
         x: 15,
         y: 0,
