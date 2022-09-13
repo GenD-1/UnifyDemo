@@ -265,3 +265,5 @@ export const chainModelProps = {
 }
 
 export const pendantShowCount = 3
+
+export const productExperienceUrl = 'https://localhost:3000/product'

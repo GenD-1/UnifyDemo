@@ -5,9 +5,10 @@ import { animated, useSpring } from "@react-spring/three";
 import { useGesture } from "@use-gesture/react";
 import useStore from "../../store";
 import { isPointInSquare } from "../../helper/math";
-import { useEffect, useRef} from "react";
+import { useEffect, useRef, useState} from "react";
+import { productExperienceUrl } from "../../constants";
 
-export const Model = ({url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id}: any) => {
+export const Model = ({url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo}: any) => {
     const model = useLoader( GLTFLoader, url ) as any
 
     const meshRef = useRef(null) as any
@@ -20,6 +21,8 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
     const currentPage = useStore((state: any) => state.currentPage)
 
     const focusInfo = useStore((state: any) => state.focusInfo)
+
+    const [ latestTap, setLatestTap ] = useState(0)
 
     const getCurrentPosition = () => {
         const diffPageCount = page - currentPage
@@ -135,6 +138,19 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
         document.body.style.cursor = ''
     }
 
+    const focusObject = (event: any) => {
+        event.stopPropagation()
+
+        const now = new Date().getTime()
+        const timeSince = now - latestTap
+        if((timeSince < 600) && (timeSince > 0)) {
+            // double click action
+            window.location.replace(`${ productExperienceUrl }/${ modelInfo.id }`)
+        }
+
+        setLatestTap( new Date().getTime() )
+    }
+
     return (
         currentPage === page && (!focusInfo.isFocus || focusInfo.focusId === id) ? (
             <animated.mesh 
@@ -145,8 +161,9 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
                 onPointerOut={ onPointerOutHandler }
                 ref={ meshRef }
                 // rotation={[ 0, ang2Rad(90), 0 ]}
+                onClick={ modelInfo.feather ? focusObject : null }
             >
-                <mesh position={meshPosition}>
+                <mesh position={meshPosition} onClick={ focusObject }>
                     <boxGeometry args={meshSize} />
                     <meshBasicMaterial color={'red'} transparent opacity={0.0}/>
                 </mesh>
