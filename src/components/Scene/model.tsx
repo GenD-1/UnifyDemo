@@ -5,11 +5,11 @@ import { animated, useSpring } from "@react-spring/three";
 import { useGesture } from "@use-gesture/react";
 import useStore from "../../store";
 import { isPointInSquare } from "../../helper/math";
-import { useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import { productExperienceUrl } from "../../constants";
 
-export const Model = ({url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo}: any) => {
-    const model = useLoader( GLTFLoader, url ) as any
+export const Model = ({ url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo }: any) => {
+    const model = useLoader(GLTFLoader, url) as any
 
     const meshRef = useRef(null) as any
 
@@ -22,7 +22,7 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
 
     const focusInfo = useStore((state: any) => state.focusInfo)
 
-    const [ latestTap, setLatestTap ] = useState(0)
+    const [latestTap, setLatestTap] = useState(0)
 
     const getCurrentPosition = () => {
         const diffPageCount = page - currentPage
@@ -41,7 +41,7 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
     const originPosition = getCurrentPosition()
 
     useEffect(() => {
-        if( !page ) return
+        if (!page) return
 
         api.start({
             position: [
@@ -57,7 +57,7 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
 
     const bind = useGesture({
         onDrag: ({ active, timeStamp, event }: any) => {
-            if( !drawable || focusInfo.isFocus ) return
+            if (!drawable || focusInfo.isFocus) return
 
             event.stopPropagation()
 
@@ -83,15 +83,15 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
             } else {
                 document.body.style.cursor = 'grab'
             }
-        
+
             setDragInfo({
                 isDragging: active,
             })
-        
+
             return timeStamp
         },
         onDragEnd: ({ event }: any) => {
-            if( !drawable ) return
+            if (!drawable) return
 
             event.stopPropagation()
 
@@ -111,7 +111,7 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
 
             const len = 0.02
 
-            if( isPointInSquare( newPos, centerPos, len ) ) {
+            if (isPointInSquare(newPos, centerPos, len)) {
                 api.start({
                     position: [0, 0.05, 0],
                 })
@@ -126,14 +126,14 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
     })
 
     const onPointerOverHandler = (e: any) => {
-        if( !drawable ) return
+        if (!drawable) return
 
         e.stopPropagation()
         document.body.style.cursor = 'grab'
     }
 
     const onPointerOutHandler = () => {
-        if( !drawable ) return
+        if (!drawable) return
 
         document.body.style.cursor = ''
     }
@@ -143,29 +143,29 @@ export const Model = ({url, scale, drawable, page, index: posIndex, small, meshP
 
         const now = new Date().getTime()
         const timeSince = now - latestTap
-        if((timeSince < 600) && (timeSince > 0)) {
+        if ((timeSince < 600) && (timeSince > 0)) {
             // double click action
-            window.location.replace(`${ productExperienceUrl }/${ modelInfo.id }`)
+            window.location.replace(`${productExperienceUrl}/${modelInfo.id}`)
         }
 
-        setLatestTap( new Date().getTime() )
+        setLatestTap(new Date().getTime())
     }
 
     return (
         currentPage === page && (!focusInfo.isFocus || focusInfo.focusId === id) ? (
-            <animated.mesh 
-                { ...spring }
-                { ...bind() as any }
-                scale={ scale }
-                onPointerOver={ onPointerOverHandler } 
-                onPointerOut={ onPointerOutHandler }
-                ref={ meshRef }
+            <animated.mesh
+                {...spring}
+                {...bind() as any}
+                scale={scale}
+                onPointerOver={onPointerOverHandler}
+                onPointerOut={onPointerOutHandler}
+                ref={meshRef}
                 // rotation={[ 0, ang2Rad(90), 0 ]}
-                onClick={ modelInfo.feather ? focusObject : null }
+                onClick={modelInfo.feather ? focusObject : null}
             >
-                <mesh position={meshPosition} onClick={ focusObject }>
+                <mesh position={meshPosition} onClick={focusObject}>
                     <boxGeometry args={meshSize} />
-                    <meshBasicMaterial color={'red'} transparent opacity={0.0}/>
+                    <meshBasicMaterial color={'red'} transparent opacity={0.0} />
                 </mesh>
                 <primitive object={model.scene} />
             </animated.mesh>
