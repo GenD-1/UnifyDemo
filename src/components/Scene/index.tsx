@@ -34,6 +34,9 @@ export const Scene = () => {
     //     y: 300,
     //     fill: "pink",
     // });
+    
+
+    
 
     // useEffect(() => {
     //     function onChange() {
