@@ -33,10 +33,12 @@ export const Scene = () => {
     //     x: 300,
     //     y: 300,
     //     fill: "pink",
+
+    
     // });
     
 
-    
+
 
     // useEffect(() => {
     //     function onChange() {
