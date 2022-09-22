@@ -55,15 +55,14 @@ function EditorWrapedWithLiveBlock() {
 
 
     return (
-        <HMSRoomProvider>
-            <RoomProvider id="react-todo-apps-test" initialPresence={{ selectedCell: null, }}>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <WhoIsHere />
-                    <Editor />
-                    <SpacesApp />
-                </Suspense>
-            </RoomProvider>
-        </HMSRoomProvider>
+
+        <RoomProvider id="react-todo-apps-test" initialPresence={{ selectedCell: null, }}>
+            <Suspense fallback={<div>Loading...</div>}>
+                <WhoIsHere />
+                <Editor />
+                <SpacesApp />
+            </Suspense>
+        </RoomProvider>
     );
 }
 

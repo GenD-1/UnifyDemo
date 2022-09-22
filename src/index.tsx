@@ -7,15 +7,15 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import '@fontsource/inter/index.css'
 import "@fontsource/manrope";
 import './theme/global.scss';
-// import { HMSRoomProvider } from "@100mslive/react-sdk";
+import { HMSRoomProvider } from '@100mslive/hms-video-react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
     <Router>
-      {/* <HMSRoomProvider> */}
+      <HMSRoomProvider>
       <App />
-      {/* </HMSRoomProvider> */}
+      </HMSRoomProvider>
     </Router>
 
   </React.StrictMode>
