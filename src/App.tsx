@@ -1,12 +1,12 @@
 import { Route, Routes, Navigate } from 'react-router-dom'
-import Editor from './pages/Editor'
+import EditorWrapedWithLiveBlock from './pages/EditorWrapedWithLiveBlock';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Editor />} />
-        <Route path="*" element={<Navigate to="/" />}/>
+        <Route path="/" element={<EditorWrapedWithLiveBlock />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
   );
