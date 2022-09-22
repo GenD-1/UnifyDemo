@@ -15,7 +15,7 @@ const AudioPlayer = ({ length }: props) => {
       }
     }
   }
-  return <audio id='' autoPlay loop ref={audioRef} src='http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Sevish_-__nbsp_.mp3'></audio>;
+  return <audio autoPlay loop ref={audioRef} src='http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Sevish_-__nbsp_.mp3'></audio>;
 };
 
 

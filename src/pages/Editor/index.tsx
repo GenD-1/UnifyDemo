@@ -67,26 +67,9 @@ const ActionWrapper = styled.div`
 `
 
 export const Editor = () => {
-    // const [url, setUrl] = useState('');
-    // const [id, setId] = useState(Math.floor(100000 + Math.random() * 900000))
     const currentPage = useStore((state: any) => state.currentPage)
     const moveToNextPage = useStore((state: any) => state.moveToNextPage)
     const moveToPrevPage = useStore((state: any) => state.moveToPrevPage)
-
-    // socket.on("connect", () => {
-    //     console.log(socket.id);
-    // });
-
-    // socket.on("disconnect", () => {
-    //     console.log(socket.id);
-    // });
-
-    // socket.on("reciveAudio", (data) => {
-    //     if (data.id !== id) {
-    //         console.log(id);
-    //         console.log("data recives", data);
-    //     }
-    // })
 
 
 
@@ -105,35 +88,6 @@ export const Editor = () => {
     })
 
 
-    // const getAudio = async () => {
-    //     let chunks: Array<any> = [];
-    //     let recorder: any;
-
-    //     try {
-    //         let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    //         recorder = new MediaRecorder(stream);
-    //         recorder.ondataavailable = (e: any) => {
-
-
-    //             chunks.push(e.data);
-
-
-    //             let blob = new Blob(chunks, { type: "audio/webm" });
-    //             let testAudioRecord = URL.createObjectURL(blob);
-    //             socket.emit("audioData", { chunks: testAudioRecord, id: id });
-
-    //             console.log(testAudioRecord);
-
-    //         };
-    //         recorder.start(3000);
-
-    //         // setTimeout(() => {
-    //         //     recorder.stop(); //   Cannot read ('stop') =error
-    //         // }, 2000);
-    //     } catch (e) {
-    //         console.log("error getting stream", e);
-    //     }
-    // };
 
     return (
         <div className='overflow-hidden w-screen h-screen flex flex-col'>
