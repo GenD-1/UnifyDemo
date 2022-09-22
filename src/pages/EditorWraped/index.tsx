@@ -4,6 +4,9 @@ import { COLORS_PRESENCE } from '../../constants';
 import { RoomProvider, useMap, useMyPresence, useOthers } from "../../liveblocks.config";
 import Editor from '../Editor';
 import { LiveMap } from "@liveblocks/client";
+import Join from "../../components/Join";
+import Room from "../../components/Room";
+import { HMSRoomProvider, selectIsConnectedToRoom, useHMSStore } from "@100mslive/react-sdk";
 
 
 function WhoIsHere({ userCount }: any) {
@@ -13,7 +16,7 @@ function WhoIsHere({ userCount }: any) {
     );
 }
 
-function Room() {
+function Rooms() {
 
     const others = useOthers();
 
@@ -64,12 +67,27 @@ function PageShow() {
 }
 
 function EditorWraped() {
+
+    // function useOverrideRoomId(roomId: string) {
+    //     const query = Math.floor(100000 + Math.random() * 900000);
+    //     const overrideRoomId = useMemo(() => {
+    //         return query ? `${roomId}-${query}` : roomId;
+    //     }, [query, roomId]);
+
+    //     return overrideRoomId;
+    // }
+
+
+    // const roomId = useOverrideRoomId("react-todo-apps-test");
+
     return (
-        <RoomProvider id="react-todo-app" initialPresence={{ shapes: new LiveMap(), }} initialStorage={{ shapes: new LiveMap(), }}>
-            {/* <Suspense fallback={<div>Loading...</div>}> */}
-            <Room />
-            {/* </Suspense> */}
-        </RoomProvider>
+        <HMSRoomProvider>
+            <RoomProvider id="react-todo-app" initialPresence={{ shapes: new LiveMap(), }} initialStorage={{ shapes: new LiveMap(), }}>
+                {/* <Suspense fallback={<div>Loading...</div>}> */}
+                <Rooms />
+                {/* </Suspense> */}
+            </RoomProvider>
+        </HMSRoomProvider>
     );
 }
 

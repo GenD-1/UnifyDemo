@@ -1,9 +1,3 @@
-import {
-    selectPeers,
-    useHMSStore,
-    selectDominantSpeaker,
-    selectLocalPeer,
-} from '@100mslive/hms-video-react';
 import React from 'react';
 import Controls from './Controls';
 import UserAvatar from './UserAvatar';
@@ -12,6 +6,7 @@ import LonelyPeer from './LonelyPeer';
 import DominantSpeaker from './DominantSpeaker';
 import Layout from './Layout';
 import AudioPlayer from './AudioPlayer';
+import { selectDominantSpeaker, selectLocalPeer, selectPeers, useHMSStore } from '@100mslive/react-sdk';
 
 const Room = () => {
     const localPeer = useHMSStore(selectLocalPeer);

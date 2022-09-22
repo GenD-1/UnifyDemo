@@ -4,11 +4,8 @@ import MicOffIcon from '../icons/MicOffIcon';
 import DisplayIcon from '../icons/DisplayIcon';
 import UserPlusIcon from '../icons/UserPlusIcon';
 import HeadphoneIcon from '../icons/HeadphoneIcon';
-import {
-  useHMSStore,
-  useHMSActions,
-  selectIsLocalAudioEnabled,
-} from '@100mslive/hms-video-react';
+import { selectIsLocalAudioEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
+
 
 const Controls = () => {
   const actions = useHMSActions();

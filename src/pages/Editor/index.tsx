@@ -11,6 +11,9 @@ import Modal from 'react-modal';
 import { useBatch, useHistory, useOthers, useMap, useMyPresence } from '../../liveblocks.config'
 import { LiveObject } from "@liveblocks/client";
 import { Shape } from 'three'
+import { selectIsConnectedToRoom, useHMSStore } from '@100mslive/react-sdk';
+import Room from '../../components/Room';
+import Join from '../../components/Join';
 
 Modal.setAppElement('#root');
 
@@ -107,30 +110,35 @@ export const Editor = ({ shapes }: any) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
-    
+    const [token, setToken] = useState('')
+    const [url, setUrl] = useState('')
 
-
-
-    // const batch = useBatch();
-    // const history = useHistory();
-    // const others = useOthers();
-
-    // function getRandomInt(max: any) {
-    //     return Math.floor(Math.random() * max);
-    // }
 
     // useEffect(() => {
-    //     batch(() => {
-    //         const shapeId = Date.now().toString();
-    //         const shape = new LiveObject({
-    //             x: getRandomInt(300),
-    //             y: getRandomInt(300),
-    //             fill: "pink",
-    //         });
-    //         // shapes.set(shapeId, shape);
-    //         // setPresence({ selectedShape: shapeId }, { addToHistory: true });
-    //     });
+    //     handleToken()
     // }, [])
+
+    const handleToken = (active: any) => {
+        if (token === '') {
+            fetch("http://192.168.2.113:4001/managementToken")
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        console.log(result);
+                        setToken(result.token)
+                        let newUrl = window.location.href + '/' + result.token + '/' + result.roomId
+                        setUrl(newUrl)
+                        handleModal(active)
+                    },
+                    (error) => {
+                        console.log(error)
+                    }
+                )
+        } else {
+            handleModal(active)
+        }
+    }
+
 
     const moveToPrev = useDoubleTap((event: any) => {
         if (currentPage > 1)
@@ -149,7 +157,7 @@ export const Editor = ({ shapes }: any) => {
     }
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(window.location.href)
+        navigator.clipboard.writeText(url)
         setCopyModelOpen(true)
         setTimeout(() => {
             setCopyModelOpen(false)
@@ -157,7 +165,12 @@ export const Editor = ({ shapes }: any) => {
         }, 2000)
     }
 
-   
+    const SpacesApp = () => {
+        const isConnected = useHMSStore(selectIsConnectedToRoom);
+        return <>{isConnected ? <Room /> : <Join tokenData={token} />}</>;
+    };
+
+
     return (
         <div>
             <Modal
@@ -174,7 +187,7 @@ export const Editor = ({ shapes }: any) => {
                     {/* <div className='flex h-full justify-center items-center'>Link Copied to clipboard</div> */}
                     <div className='flex h-full justify-center items-center'>
                         <div className='w-10/12 bg-[#f9f9f9] h-[35px] border-[1px] border-solid border-black p-[1%] rounded-sm flex justify-between'>
-                            <span>{window.location.href}</span>
+                            <span>{url}</span>
                             <div onClick={handleCopy} className='text-[#065fd4] cursor-pointer'>COPY</div>
                         </div>
                     </div>
@@ -212,11 +225,16 @@ export const Editor = ({ shapes }: any) => {
                 </CanvasWrapper>
 
                 <ActionWrapper>
-                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center font-bold'>
+                    <button onClick={() => handleToken(true)} className='flex flex-col justify-center items-center font-bold'>
                         <img src='assets/ShareIcon.png' alt='pic'></img>
                         Share
                     </button>
                 </ActionWrapper>
+                <>
+                    {token &&
+                        <SpacesApp />
+                    }
+                </>
 
                 <>
                     <PrevArea {...moveToPrev} />

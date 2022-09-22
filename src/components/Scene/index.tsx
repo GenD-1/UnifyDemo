@@ -17,10 +17,6 @@ export const Scene = () => {
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
 
-    useEffect(() => {
-        console.log(scaleValue);
-        // onCanvasPointerMove()
-    }, [dragInfo])
 
     // const [{ selectedShape }, setPresence] = useMyPresence();
     // const [isDragging, setIsDragging] = useState(false);

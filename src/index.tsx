@@ -13,9 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
     <Router>
-      <HMSRoomProvider>
-      <App />
-      </HMSRoomProvider>
+      {/* <HMSRoomProvider> */}
+        <App />
+      {/* </HMSRoomProvider> */}
     </Router>
 
   </React.StrictMode>
