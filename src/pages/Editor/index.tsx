@@ -6,8 +6,7 @@ import { useDoubleTap } from 'use-double-tap'
 import Scene from '../../components/Scene'
 import { pendantShowCount, pendantsModelProps } from '../../constants'
 import useStore from '../../store'
-import { io } from "socket.io-client";
-const socket = io('http://localhost:4001/');
+
 
 const CanvasWrapper = styled.div`
     height: calc(90% - 40px);

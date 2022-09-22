@@ -3,15 +3,21 @@ interface props { length: any }
 const AudioPlayer = ({ length }: props) => {
   const audioRef = React.useRef<any>(null);
   React.useEffect(() => {
+    loadAudio()
+  }, [length]);
+
+  const loadAudio = async () => {
     if (audioRef.current) {
       if (length === 1) {
-        audioRef.current.play();
+        await audioRef.current.play();
       } else {
-        audioRef.current.pause();
+        await audioRef.current.pause();
       }
     }
-  }, [length]);
-  return <audio autoPlay loop ref={audioRef} src='/temp.mp3'></audio>;
+  }
+  return <audio id='' autoPlay loop ref={audioRef} src='http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Sevish_-__nbsp_.mp3'></audio>;
 };
+
+
 
 export default AudioPlayer;
