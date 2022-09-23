@@ -20,7 +20,7 @@ const Room = () => {
                     {isAudioOn ? <MicOnIcon /> : <MicOffIcon />}
                 </button>
                 <div className='ml-4'>
-                    {peers.length > 1 ? <Participants peers={peers} /> : <LonelyPeer />}
+                    <Participants peers={peers} />
                 </div>
             </div>
         </Layout>
