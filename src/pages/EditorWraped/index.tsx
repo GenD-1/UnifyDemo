@@ -4,16 +4,14 @@ import { COLORS_PRESENCE } from '../../constants';
 import { RoomProvider, useMap, useMyPresence, useOthers } from "../../liveblocks.config";
 import Editor from '../Editor';
 import { LiveMap } from "@liveblocks/client";
-
-import Conference from "../../components/Testing/Conference";
+import { v1 as uuidv1 } from 'uuid';
 import {
     selectIsConnectedToRoom,
     useHMSActions,
     useHMSStore,
     useAVToggle
-  } from "@100mslive/react-sdk";
+} from "@100mslive/react-sdk";
 import Footer from "../../components/Testing/Footer";
-import JoinForm from "../../components/Testing/JoinForm";
 
 function WhoIsHere({ userCount }: any) {
 
@@ -78,29 +76,56 @@ function EditorWraped() {
     const hmsActions = useHMSActions();
 
     useEffect(() => {
-        
+
         window.onunload = () => {
             if (isConnected) {
                 hmsActions.leave();
             }
         };
-        
-        joinTheRoom();
+
+        fetchRoomId();
 
     }, [hmsActions, isConnected]);
-    
-    const joinTheRoom = async () => {
+
+    const fetchRoomId = async () => {
+        await fetch("http://192.168.2.113:4001/managementToken")
+            .then(res => res.json())
+            .then(
+                async (result) => {
+                    console.log(result);
+                    let newUrl = window.location.href + result.roomId
+                    await fetchToken(result.roomId)
+                },
+                (error) => {
+                    console.log(error)
+                }
+            )
+    }
+
+    const fetchToken = async (room_id: any) => {
+        const Id = uuidv1()
+        const response = await fetch(`https://prod-in2.100ms.live/hmsapi/unifymarketplace-audio.app.100ms.live/api/token`, {
+            method: 'POST',
+            body: JSON.stringify({
+                user_id: Id,
+                role: 'speaker',
+                room_id,
+            }),
+        });
+
+        const { token } = await response.json();
+
         await hmsActions.join({
             userName: "Demo",
-            authToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3Nfa2V5IjoiNjMyYjQyY2NlMDg4NjNhM2YyZjZjZDg3Iiwicm9vbV9pZCI6IjYzMmQ5YzgyNzA4NGI1OWY2M2E3OWRjZSIsInVzZXJfaWQiOiI2MzJiNDJjY2UwODg2M2EzZjJmNmNkODQiLCJyb2xlIjoic3BlYWtlciIsImp0aSI6IjU0OTM4NzFhLWM2Y2EtNDIzOC1hNmM2LTA0YTZhNDczOTQ1NyIsInR5cGUiOiJhcHAiLCJ2ZXJzaW9uIjoyLCJleHAiOjE2NjQwMTk5NzF9.9W3ZOOz1FwGuTfqtaS2hoTKUxSJ5dYPBxPGDD0Jacxk"
+            authToken: token
         });
-    } 
+    }
 
-    
+
     return (
         <div>
-            
-            {isConnected && 
+
+            {isConnected &&
                 <Footer />
             }
 
@@ -109,7 +134,7 @@ function EditorWraped() {
                 <Room />
                 {/* </Suspense> */}
             </RoomProvider>
-            
+
         </div>
     );
 }
