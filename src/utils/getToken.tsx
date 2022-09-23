@@ -1,11 +1,17 @@
-const endPoint = process.env.REACT_APP_TOKEN_ENDPOINT;
-const room_id = process.env.REACT_APP_ROOM_ID;
+import { v1 as uuidv1 } from 'uuid'
 
-export default async function getToken(role: any) {
+const endPoint = process.env.REACT_APP_TOKEN_ENDPOINT;
+
+
+const Id = uuidv1()
+
+export default async function getToken(role: any, room_id: any) {
+    console.log(endPoint);
+
     const response = await fetch(`${endPoint}api/token`, {
         method: 'POST',
         body: JSON.stringify({
-            user_id: '5fc62c5872909272bf9995e1', // User ID assigned by you (different from 100ms' assigned id)
+            user_id: Id, // User ID assigned by you (different from 100ms' assigned id)
             role: role, // listener , speaker , moderator
             room_id,
         }),

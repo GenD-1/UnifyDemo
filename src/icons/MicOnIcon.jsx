@@ -1,11 +1,10 @@
-import React from 'react';
 
 function SvgComponent(props) {
   return (
     <svg
       viewBox='0 0 24 24'
-      width={20}
-      height={20}
+      width={30}
+      height={30}
       stroke='currentColor'
       strokeWidth={1.5}
       strokeLinecap='round'

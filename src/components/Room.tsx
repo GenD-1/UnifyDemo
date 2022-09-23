@@ -1,14 +1,12 @@
-import Participants from './Participants';
-import LonelyPeer from './LonelyPeer';
 import Layout from './Layout';
-import { selectIsLocalAudioEnabled, selectPeers, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
+import { selectIsLocalAudioEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
 import MicOnIcon from '../icons/MicOnIcon';
 import MicOffIcon from '../icons/MicOffIcon';
 
 const Room = () => {
-    const peers = useHMSStore(selectPeers);
     const actions = useHMSActions();
     const isAudioOn = useHMSStore(selectIsLocalAudioEnabled);
+
     return (
         <Layout>
             <div className='flex'>
@@ -18,10 +16,8 @@ const Room = () => {
                     }}
                 >
                     {isAudioOn ? <MicOnIcon /> : <MicOffIcon />}
+                    {isAudioOn ? 'Mic ON' : 'Mic Off'}
                 </button>
-                <div className='ml-4'>
-                    <Participants peers={peers} />
-                </div>
             </div>
         </Layout>
     );

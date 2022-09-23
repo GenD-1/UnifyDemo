@@ -1,10 +1,8 @@
-import React from 'react';
-import Socials from './Socials';
 interface props { children: any }
 const Layout = ({ children }: props) => {
   return (
     <div className='flex flex-col items-center justify-center h-screen bg-brand-100'>
-      <div className='border border-gray-500 rounded p-4 w-80 bg-brand-600'>
+      <div className='rounded p-4 w-40 bg-brand-600'>
         {children}
       </div>
       {/* <Socials /> */}

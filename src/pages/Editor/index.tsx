@@ -68,9 +68,9 @@ const LogoWrapper = styled.div`
 
 const ActionWrapper = styled.div`
     display: flex;
-    position: fixed;
+    position: absolute;
     right: 1%;
-    bottom: -45%;
+    bottom: -50%;
 
     img {
         width: 50%;
@@ -114,27 +114,30 @@ export const Editor = ({ shapes }: any) => {
     const [token, setToken] = useState('')
     const [url, setUrl] = useState('')
 
+    const tokenUrl = window.location.href.split('/');
 
     useEffect(() => {
-        handleToken()
+        if (tokenUrl[3] === '') {
+            handleToken()
+        } else {
+            setToken(tokenUrl[3])
+        }
     }, [])
 
     const handleToken = () => {
-        if (token === '') {
-            fetch("http://192.168.2.113:4001/managementToken")
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        console.log(result);
-                        setToken(result.token)
-                        let newUrl = window.location.href + result.token + '/' + result.roomId
-                        setUrl(newUrl)
-                    },
-                    (error) => {
-                        console.log(error)
-                    }
-                )
-        }
+        fetch("http://192.168.2.113:4001/managementToken")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    setToken(result.roomId)
+                    let newUrl = window.location.href + result.roomId
+                    setUrl(newUrl)
+                },
+                (error) => {
+                    console.log(error)
+                }
+            )
     }
 
     const moveToPrev = useDoubleTap((event: any) => {
@@ -164,7 +167,7 @@ export const Editor = ({ shapes }: any) => {
 
     const SpacesApp = () => {
         const isConnected = useHMSStore(selectIsConnectedToRoom);
-        return <>{isConnected ? <Room /> : <Join tokenData={token} />}</>;
+        return <> {isConnected ? <Room /> : <Join room_id={token} />} </>;
     };
 
 
@@ -226,6 +229,7 @@ export const Editor = ({ shapes }: any) => {
                         Share
                     </button>
                 </ActionWrapper>
+
 
 
                 <>
