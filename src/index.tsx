@@ -7,11 +7,14 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import '@fontsource/inter/index.css'
 import "@fontsource/manrope";
 import './theme/global.scss'
+import { HMSRoomProvider } from "@100mslive/react-sdk";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router>
-      <App />
+      <HMSRoomProvider>
+        <App />
+      </HMSRoomProvider>
     </Router>
   </React.StrictMode>
 )
