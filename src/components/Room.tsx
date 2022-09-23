@@ -1,28 +1,28 @@
-import React from 'react';
-import Controls from './Controls';
-import UserAvatar from './UserAvatar';
 import Participants from './Participants';
 import LonelyPeer from './LonelyPeer';
-import DominantSpeaker from './DominantSpeaker';
 import Layout from './Layout';
-import AudioPlayer from './AudioPlayer';
-import { selectDominantSpeaker, selectLocalPeer, selectPeers, useHMSStore } from '@100mslive/react-sdk';
+import { selectIsLocalAudioEnabled, selectPeers, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
+import MicOnIcon from '../icons/MicOnIcon';
+import MicOffIcon from '../icons/MicOffIcon';
 
 const Room = () => {
-    const localPeer = useHMSStore(selectLocalPeer);
     const peers = useHMSStore(selectPeers);
-    const dominantSpeaker = useHMSStore(selectDominantSpeaker);
+    const actions = useHMSActions();
+    const isAudioOn = useHMSStore(selectIsLocalAudioEnabled);
     return (
         <Layout>
             <div className='flex'>
-                <AudioPlayer length={peers.length} />
-                <UserAvatar dominantSpeaker={dominantSpeaker} localPeer={localPeer} />
+                <button
+                    onClick={() => {
+                        actions.setLocalAudioEnabled(!isAudioOn);
+                    }}
+                >
+                    {isAudioOn ? <MicOnIcon /> : <MicOffIcon />}
+                </button>
                 <div className='ml-4'>
-                    <DominantSpeaker dominantSpeaker={dominantSpeaker} />
                     {peers.length > 1 ? <Participants peers={peers} /> : <LonelyPeer />}
                 </div>
             </div>
-            <Controls />
         </Layout>
     );
 };

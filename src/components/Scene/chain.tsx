@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 export const ChainModel = ({ url, position, scale, }: any) => {
     const model = useLoader(GLTFLoader, url) as any
-    debugger
     return (
         <mesh
             position={position}

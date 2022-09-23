@@ -17,8 +17,6 @@ export const Scene = () => {
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
 
-    debugger
-    
     return (
         <Canvas
             gl={{ antialias: true, alpha: true, }}
@@ -72,7 +70,7 @@ export const Scene = () => {
             />
 
             <Suspense fallback={<Loader />}>
-                
+
                 {!focusInfo.isFocus ? (
                     <ChainModel
                         url={chainModelProps.src}
@@ -81,7 +79,7 @@ export const Scene = () => {
                     />
                 ) : null}
 
-                {/* {pendantsModelProps.map((item: any, index: number) => (
+                {pendantsModelProps.map((item: any, index: number) => (
                     <Model
                         key={`pendantsmodel${index}`}
                         url={item.src}
@@ -95,7 +93,7 @@ export const Scene = () => {
                         id={item.id}
                         modelInfo={item}
                     />
-                ))} */}
+                ))}
 
                 {/* <mesh position={[0, 0.07, 0]}>
                     <boxGeometry args={[0.04, 0.04, 0.001]} />

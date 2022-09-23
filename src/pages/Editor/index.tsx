@@ -67,9 +67,10 @@ const LogoWrapper = styled.div`
 `
 
 const ActionWrapper = styled.div`
+    display: flex;
     position: fixed;
     right: 1%;
-    bottom: 1%;
+    bottom: -45%;
 
     img {
         width: 50%;
@@ -114,11 +115,11 @@ export const Editor = ({ shapes }: any) => {
     const [url, setUrl] = useState('')
 
 
-    // useEffect(() => {
-    //     handleToken()
-    // }, [])
+    useEffect(() => {
+        handleToken()
+    }, [])
 
-    const handleToken = (active: any) => {
+    const handleToken = () => {
         if (token === '') {
             fetch("http://192.168.2.113:4001/managementToken")
                 .then(res => res.json())
@@ -128,17 +129,13 @@ export const Editor = ({ shapes }: any) => {
                         setToken(result.token)
                         let newUrl = window.location.href + result.token + '/' + result.roomId
                         setUrl(newUrl)
-                        handleModal(active)
                     },
                     (error) => {
                         console.log(error)
                     }
                 )
-        } else {
-            handleModal(active)
         }
     }
-
 
     const moveToPrev = useDoubleTap((event: any) => {
         if (currentPage > 1)
@@ -182,7 +179,7 @@ export const Editor = ({ shapes }: any) => {
                 <div className='flex flex-col h-full'>
                     <div className='flex'>
                         <div>Share</div>
-                        <img onClick={() => handleModal(false)} src='assets/close.png' alt='close' className='w-6 ml-auto cursor-pointer'></img>
+                        <img onClick={() => handleModal(false)} src='/assets/close.png' alt='close' className='w-6 ml-auto cursor-pointer'></img>
                     </div>
                     {/* <div className='flex h-full justify-center items-center'>Link Copied to clipboard</div> */}
                     <div className='flex h-full justify-center items-center'>
@@ -207,7 +204,7 @@ export const Editor = ({ shapes }: any) => {
 
             <div className='overflow-hidden w-screen h-screen flex flex-col'>
                 <LogoWrapper className='flex justify-center items-center'>
-                    <img src={'assets/BrandLogo_Template.png'} alt='pic'></img>
+                    <img src={'/assets/BrandLogo_Template.png'} alt='pic'></img>
                 </LogoWrapper>
 
                 <CanvasWrapper
@@ -221,16 +218,15 @@ export const Editor = ({ shapes }: any) => {
                 </CanvasWrapper>
 
                 <ActionWrapper>
-                    <button onClick={() => handleToken(true)} className='flex flex-col justify-center items-center font-bold'>
-                        <img src='assets/ShareIcon.png' alt='pic'></img>
+                    {/* <button className='flex flex-col justify-center items-center font-bold'> */}
+                    <SpacesApp />
+                    {/* </button> */}
+                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center font-bold'>
+                        <img src='/assets/ShareIcon.png' alt='pic'></img>
                         Share
                     </button>
                 </ActionWrapper>
-                <>
-                    {/* {token && */}
-                    <SpacesApp />
-                    {/* } */}
-                </>
+
 
                 <>
                     <PrevArea {...moveToPrev} />
