@@ -95,7 +95,7 @@ const customStylescopy = {
     },
 }
 
-export const Editor = ({ shapes }: any) => {
+export const Editor = ({ shapes, shareUrl }: any) => {
     const currentPage = useStore((state: any) => state.currentPage)
     const moveToNextPage = useStore((state: any) => state.moveToNextPage)
     const moveToPrevPage = useStore((state: any) => state.moveToPrevPage)
@@ -103,7 +103,7 @@ export const Editor = ({ shapes }: any) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
-    
+
 
 
 
@@ -144,7 +144,7 @@ export const Editor = ({ shapes }: any) => {
     }
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(window.location.href)
+        navigator.clipboard.writeText(shareUrl)
         setCopyModelOpen(true)
         setTimeout(() => {
             setCopyModelOpen(false)
@@ -168,7 +168,7 @@ export const Editor = ({ shapes }: any) => {
                     {/* <div className='flex h-full justify-center items-center'>Link Copied to clipboard</div> */}
                     <div className='flex h-full justify-center items-center'>
                         <div className='w-10/12 bg-[#f9f9f9] h-[35px] border-[1px] border-solid border-black p-[1%] rounded-sm flex justify-between'>
-                            <span>{window.location.href}</span>
+                            <span>{shareUrl}</span>
                             <div onClick={handleCopy} className='text-[#065fd4] cursor-pointer'>COPY</div>
                         </div>
                     </div>

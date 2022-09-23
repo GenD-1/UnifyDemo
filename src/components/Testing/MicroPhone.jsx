@@ -1,7 +1,7 @@
 import { useAVToggle } from "@100mslive/react-sdk";
 import { useEffect, useState } from "react";
 
-function Footer() {
+function MicroPhone() {
 
   const [checkFirstTimeAudioEnable, setCheckFirstTimeAudioEnable] = useState(false)
   const {
@@ -9,8 +9,8 @@ function Footer() {
     toggleAudio
   } = useAVToggle();
 
-  useEffect( () => {
-    if(isLocalAudioEnabled && !checkFirstTimeAudioEnable) {
+  useEffect(() => {
+    if (isLocalAudioEnabled && !checkFirstTimeAudioEnable) {
       toggleAudio()
       setCheckFirstTimeAudioEnable(true)
     }
@@ -26,4 +26,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default MicroPhone;

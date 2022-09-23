@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Avatar from '../../components/Avatar/Avatar';
 import { COLORS_PRESENCE } from '../../constants';
 import { RoomProvider, useMap, useMyPresence, useOthers } from "../../liveblocks.config";
@@ -11,7 +11,7 @@ import {
     useHMSStore,
     useAVToggle
 } from "@100mslive/react-sdk";
-import Footer from "../../components/Testing/Footer";
+import MicroPhone from "../../components/Testing/MicroPhone";
 
 function WhoIsHere({ userCount }: any) {
 
@@ -20,7 +20,7 @@ function WhoIsHere({ userCount }: any) {
     );
 }
 
-function Room() {
+function Room({ url }: any) {
 
     const others = useOthers();
 
@@ -51,12 +51,12 @@ function Room() {
                     />
                 </div>
             </div>
-            <PageShow />
+            <PageShow shareUrl={url} />
         </div>
     );
 }
 
-function PageShow() {
+function PageShow({ shareUrl }: any) {
     const shapes = useMap("shapes");
 
     if (shapes === null || shapes === undefined) {
@@ -66,7 +66,7 @@ function PageShow() {
             </div>
         );
     } else {
-        return <Editor shapes={shapes} />;
+        return <Editor shapes={shapes} shareUrl={shareUrl} />;
     }
 }
 
@@ -75,6 +75,9 @@ function EditorWraped() {
     const isConnected = useHMSStore(selectIsConnectedToRoom);
     const hmsActions = useHMSActions();
 
+    const [shareUrl, setShareUrl] = useState('')
+    const [roomid, setRoomId] = useState('')
+
     useEffect(() => {
 
         window.onunload = () => {
@@ -82,8 +85,11 @@ function EditorWraped() {
                 hmsActions.leave();
             }
         };
-
-        fetchRoomId();
+        if (!roomid) {
+            fetchRoomId();
+        } else {
+            fetchToken(roomid);
+        }
 
     }, [hmsActions, isConnected]);
 
@@ -94,6 +100,8 @@ function EditorWraped() {
                 async (result) => {
                     console.log(result);
                     let newUrl = window.location.href + result.roomId
+                    setShareUrl(newUrl)
+                    setRoomId(result.roomId)
                     await fetchToken(result.roomId)
                 },
                 (error) => {
@@ -125,16 +133,16 @@ function EditorWraped() {
     return (
         <div>
 
-            {isConnected &&
-                <Footer />
-            }
-
             <RoomProvider id="react-todo-app" initialPresence={{ shapes: new LiveMap(), }} initialStorage={{ shapes: new LiveMap(), }}>
                 {/* <Suspense fallback={<div>Loading...</div>}> */}
-                <Room />
+                <Room url={shareUrl} />
                 {/* </Suspense> */}
             </RoomProvider>
 
+
+            {isConnected &&
+                <MicroPhone />
+            }
         </div>
     );
 }
