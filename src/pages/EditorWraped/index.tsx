@@ -85,10 +85,11 @@ function EditorWraped() {
                 hmsActions.leave();
             }
         };
-        if (!roomid) {
+        let currentUrl = (window.location.href).split('/')
+        if (currentUrl[3] === '') {
             fetchRoomId();
         } else {
-            fetchToken(roomid);
+            fetchToken(currentUrl[3]);
         }
 
     }, [hmsActions, isConnected]);
