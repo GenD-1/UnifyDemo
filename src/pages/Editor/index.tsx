@@ -218,9 +218,9 @@ export const Editor = ({ shapes }: any) => {
                 </CanvasWrapper>
 
                 <ActionWrapper>
-                    {/* <button className='flex flex-col justify-center items-center font-bold'> */}
-                    <SpacesApp />
-                    {/* </button> */}
+                    {token &&
+                        <SpacesApp />
+                    }
                     <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center font-bold'>
                         <img src='/assets/ShareIcon.png' alt='pic'></img>
                         Share
