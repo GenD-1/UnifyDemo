@@ -83,9 +83,9 @@ function EditorWraped() {
     return (
         <HMSRoomProvider>
             <RoomProvider id="react-todo-app" initialPresence={{ shapes: new LiveMap(), }} initialStorage={{ shapes: new LiveMap(), }}>
-                {/* <Suspense fallback={<div>Loading...</div>}> */}
+                <Suspense fallback={<div>Loading...</div>}>
                 <Rooms />
-                {/* </Suspense> */}
+                </Suspense>
             </RoomProvider>
         </HMSRoomProvider>
     );

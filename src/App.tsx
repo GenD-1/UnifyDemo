@@ -37,7 +37,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/' element={<EditorWraped />} />
-        <Route path="*" element={<Navigate to='/' />} />
+        <Route path='/:token/:id' element={<EditorWraped />} />
+        {/* <Route path="*" element={<Navigate to='/' />} /> */}
       </Routes>
     </div>
   );

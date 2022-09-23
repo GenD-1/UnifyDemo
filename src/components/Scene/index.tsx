@@ -17,59 +17,8 @@ export const Scene = () => {
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
 
-
-    // const [{ selectedShape }, setPresence] = useMyPresence();
-    // const [isDragging, setIsDragging] = useState(false);
-    // const history = useHistory();
-
-
-    // const room = useRoom();
-
-    // const shape = new LiveObject({
-    //     x: 300,
-    //     y: 300,
-    //     fill: "pink",
-    // });
+    debugger
     
-    // useEffect(() => {
-    //     function onChange() {
-    //         setShapeData(shape.toObject());
-    //     }
-
-    //     return room.subscribe(shape, onChange);
-    // }, [room, shape]);
-
-
-
-    // const [{ x, y, fill }, setShapeData] = useState(shape.toObject());
-
-
-
-    // const onShapePointerDown = (e: any) => {
-    //     history.pause();
-    //     e.stopPropagation();
-
-    //     // setPresence({ selectedShape: shapeId }, { addToHistory: true });
-
-    //     setIsDragging(true);
-    // };
-
-    // const onCanvasPointerMove = (e: any) => {
-    //     e.preventDefault();
-
-    //     if (isDragging) {
-    //         if (shape) {
-    //             shape.update({
-    //                 x: e.clientX - 50,
-    //                 y: e.clientY - 50,
-    //             });
-    //         }
-    //     }
-    // };
-
-
-
-
     return (
         <Canvas
             gl={{ antialias: true, alpha: true, }}
@@ -123,6 +72,7 @@ export const Scene = () => {
             />
 
             <Suspense fallback={<Loader />}>
+                
                 {!focusInfo.isFocus ? (
                     <ChainModel
                         url={chainModelProps.src}
@@ -131,7 +81,7 @@ export const Scene = () => {
                     />
                 ) : null}
 
-                {pendantsModelProps.map((item: any, index: number) => (
+                {/* {pendantsModelProps.map((item: any, index: number) => (
                     <Model
                         key={`pendantsmodel${index}`}
                         url={item.src}
@@ -145,7 +95,7 @@ export const Scene = () => {
                         id={item.id}
                         modelInfo={item}
                     />
-                ))}
+                ))} */}
 
                 {/* <mesh position={[0, 0.07, 0]}>
                     <boxGeometry args={[0.04, 0.04, 0.001]} />

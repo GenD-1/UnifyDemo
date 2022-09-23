@@ -1,20 +1,33 @@
 import { useHMSActions } from '@100mslive/react-sdk';
 import React, { useState } from 'react';
-
+import getToken from '../utils/getToken';
 
 const Join = ({ tokenData }: any) => {
   const actions = useHMSActions();
   const [username, setUsername] = useState('');
+  const token = window.location.href.split('/')
   const joinRoom = () => {
     console.log('tokenData', tokenData);
+
     actions.join({
       userName: username || 'Anonymous',
-      authToken: tokenData,
+      authToken: tokenData || token[3],
       settings: {
         isAudioMuted: true,
       },
       initEndpoint: process.env.REACT_APP_HMS_INIT_PEER_ENPOINT || undefined
     });
+
+    // getToken('speaker').then((t: any) => {
+    //   actions.join({
+    //     userName: username || 'Anonymous',
+    //     authToken: t,
+    //     settings: {
+    //       isAudioMuted: true,
+    //     },
+    //     initEndpoint: process.env.REACT_APP_HMS_INIT_PEER_ENPOINT || undefined
+    //   });
+    // });
   };
   return (
     <div className='flex-col items-center justify-center h-screen bg-brand-100'>

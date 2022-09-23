@@ -126,7 +126,7 @@ export const Editor = ({ shapes }: any) => {
                     (result) => {
                         console.log(result);
                         setToken(result.token)
-                        let newUrl = window.location.href + '/' + result.token + '/' + result.roomId
+                        let newUrl = window.location.href + result.token + '/' + result.roomId
                         setUrl(newUrl)
                         handleModal(active)
                     },
@@ -216,11 +216,7 @@ export const Editor = ({ shapes }: any) => {
                     <div
                         className={`sceneWrapper`}
                     >
-                        {/* {Array.from(shapes, ([shapeId, shape]) => {
-                            return ( */}
                         <Scene />
-                        {/* );
-                        })} */}
                     </div>
                 </CanvasWrapper>
 
@@ -231,9 +227,9 @@ export const Editor = ({ shapes }: any) => {
                     </button>
                 </ActionWrapper>
                 <>
-                    {token &&
-                        <SpacesApp />
-                    }
+                    {/* {token && */}
+                    <SpacesApp />
+                    {/* } */}
                 </>
 
                 <>
