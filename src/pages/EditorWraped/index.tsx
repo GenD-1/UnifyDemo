@@ -85,10 +85,11 @@ function EditorWraped() {
                 hmsActions.leave();
             }
         };
-        if (!roomid) {
+        let currentUrl = (window.location.href).split('/')
+        if (currentUrl[3] === '') {
             fetchRoomId();
         } else {
-            fetchToken(roomid);
+            fetchToken(currentUrl[3]);
         }
 
     }, [hmsActions, isConnected]);
@@ -123,10 +124,19 @@ function EditorWraped() {
 
         const { token } = await response.json();
 
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        var charactersLength = characters.length;
+        for (var i = 0; i < 5; i++) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+
         await hmsActions.join({
-            userName: "Demo",
+            userName: result,
             authToken: token
         });
+
     }
 
 
