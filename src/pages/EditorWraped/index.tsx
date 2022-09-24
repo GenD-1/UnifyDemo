@@ -26,11 +26,11 @@ function Room({ url }: any) {
 
     return (
         <div
-            className="container"
+            className="container mx-auto h-[100%]"
         // onPointerMove={onCanvasPointerMove}
         // onPointerUp={onCanvasPointerUp}
         >
-            <div className='flex mt-2 ml-1.5 justify-end'>
+            <div className='flex mt-2 ml-1.5 justify-end items-center h-[6%]'>
                 <div className='flex'>
                     {others.map(({ connectionId, presence }) => {
                         if (!connectionId) {
@@ -138,7 +138,7 @@ function EditorWraped() {
 
 
     return (
-        <div>
+        <div className='h-full'>
 
             <RoomProvider id="react-todo-app" initialPresence={{ shapes: new LiveMap(), }} initialStorage={{ shapes: new LiveMap(), }}>
                 {/* <Suspense fallback={<div>Loading...</div>}> */}
@@ -159,5 +159,5 @@ function EditorWraped() {
     );
 }
 
-
+    
 export default EditorWraped

@@ -18,7 +18,12 @@ function MicroPhone() {
 
 
   return (
-    <div className="control-bar">
+    <div className="control-bar container mx-auto absolute bottom-[10%] right-0 w-[6%]"
+    // width: 70px;
+    // position: absolute;
+    // bottom: 10%;
+    // right: 0;"
+    >
       <button className="btn-control" onClick={toggleAudio}>
         {isLocalAudioEnabled ? "Mute" : "Unmute"}
       </button>
