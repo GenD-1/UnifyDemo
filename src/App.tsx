@@ -3,7 +3,7 @@ import EditorWraped from './pages/EditorWraped';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App h-screen">
       <Routes>
         <Route path="/" element={<EditorWraped />} />
         <Route path="*" element={<Navigate to="/" />}/>

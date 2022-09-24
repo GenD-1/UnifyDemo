@@ -12,7 +12,7 @@ import { Shape } from 'three'
 Modal.setAppElement('#root');
 
 const CanvasWrapper = styled.div`
-    height: calc(90% - 40px);
+    // height: calc(90% - 40px);
 
     .sceneWrapper {
         width: 100%;
@@ -31,7 +31,7 @@ const CanvasWrapper = styled.div`
 
 const Area = styled.div`
     position: absolute;
-    top: 0;
+    // top: 0;
     background-color: white;
     width: 25vw;
     height: 25vw;
@@ -42,16 +42,19 @@ const Area = styled.div`
 const PrevArea = styled(Area)`
     display: block;
     left: 0;
+    top:40%;
+
 `
 
 const NextArea = styled(Area)`
     right: 0;
+    top:40%;
 `
 
 const LogoWrapper = styled.div`
     position: relative;
     max-height: 10%;
-    padding: 20px 0;
+    padding: 5px 0;
 
     img {
         max-width: 80%;
@@ -153,7 +156,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
     }
 
     return (
-        <div>
+        <div className='h-[100%]'>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => handleModal(false)}
@@ -186,13 +189,13 @@ export const Editor = ({ shapes, shareUrl }: any) => {
             </Modal>
 
 
-            <div className='overflow-hidden w-screen h-screen flex flex-col'>
-                <LogoWrapper className='flex justify-center items-center'>
+            <div className='overflow-hidden w-full h-full flex flex-col '>
+                <LogoWrapper className='flex justify-center items-center h-[30%]'>
                     <img src={'assets/BrandLogo_Template.png'} alt='pic'></img>
                 </LogoWrapper>
 
                 <CanvasWrapper
-                    className={`w-full h-full relative flex justify-center items-center`}
+                    className={`w-full h-full relative flex justify-center items-center `}
                 >
                     <div
                         className={`sceneWrapper`}
@@ -206,7 +209,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
                 </CanvasWrapper>
 
                 <ActionWrapper>
-                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center font-bold'>
+                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center font-bold bg-amber-400'>
                         <img src='assets/ShareIcon.png' alt='pic'></img>
                         Share
                     </button>
@@ -214,7 +217,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
 
                 <>
                     <PrevArea {...moveToPrev} />
-                    <NextArea {...moveToNext} />
+                    <NextArea {...moveToNext}  />
                 </>
             </div>
         </div>
