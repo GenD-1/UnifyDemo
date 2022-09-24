@@ -123,7 +123,7 @@ function EditorWraped() {
         });
 
         const { token } = await response.json();
-        let newUrl = window.location.href + roomid
+        let newUrl = window.location.protocol + window.location.host + "/" + roomid
         setShareUrl(newUrl)
 
         handleJoint(token)
