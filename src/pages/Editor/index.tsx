@@ -64,7 +64,6 @@ const LogoWrapper = styled.div`
 
 const ActionWrapper = styled.div`
     position: fixed;
-    right: 1%;
     bottom: 1%;
 
     img {
@@ -80,10 +79,11 @@ const customStyles = {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        width: '30%',
-        height: '40%'
+        width: '50%',
+        height: '25%',
     },
-};
+
+}
 
 const customStylescopy = {
     content: {
@@ -161,7 +161,8 @@ export const Editor = ({ shapes, shareUrl }: any) => {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => handleModal(false)}
-                style={customStyles}
+                // style={customStyles}
+                className="md:w-1/2 w-9/12 h-[20%]  translate-x-1/2 translate-y-1/2 bg-white inset-auto 2xl:mt-[10%] lg:mt-[15%] md:mt-[20%] sm:mt-[15%] mt-[40%]  md:ml-[0px] ml-[-25%] mr-[50%] p-5"
                 contentLabel="Example Modal"
             >
                 <div className='flex flex-col h-full'>
@@ -171,9 +172,9 @@ export const Editor = ({ shapes, shareUrl }: any) => {
                     </div>
                     {/* <div className='flex h-full justify-center items-center'>Link Copied to clipboard</div> */}
                     <div className='flex h-full justify-center items-center'>
-                        <div className='w-10/12 bg-[#f9f9f9] h-[35px] border-[1px] border-solid border-black p-[1%] rounded-sm flex justify-between'>
-                            <span>{shareUrl}</span>
-                            <div onClick={handleCopy} className='text-[#065fd4] cursor-pointer'>COPY</div>
+                        <div className='w-full [#f9f9f9] 2xl:h-[50px] md:h-[35px] h-[30px]  border-[1px] border-solid border-black p-[2%] rounded-sm flex justify-between'>
+                            <span className="text-sm truncate">{shareUrl}</span>
+                            <div onClick={handleCopy} className='text-[#065fd4] text-sm cursor-pointer'>COPY</div>
                         </div>
                     </div>
                 </div>
@@ -209,8 +210,8 @@ export const Editor = ({ shapes, shareUrl }: any) => {
                     </div>
                 </CanvasWrapper>
 
-                <ActionWrapper>
-                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center font-bold bg-amber-400'>
+                <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[14%] sm:w-[8%] md:w-[7%]`}>
+                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm font-bold'>
                         <img src='assets/ShareIcon.png' alt='pic'></img>
                         Share
                     </button>
@@ -218,7 +219,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
 
                 <>
                     <PrevArea {...moveToPrev} />
-                    <NextArea {...moveToNext}  />
+                    <NextArea {...moveToNext} />
                 </>
             </div>
         </div>
