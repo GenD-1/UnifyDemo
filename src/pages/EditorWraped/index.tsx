@@ -156,7 +156,7 @@ function EditorWraped() {
 
             {isConnected ?
                 <MicroPhone /> :
-                <div className="control-bar">
+                <div className="control-bar container mx-auto absolute bottom-[10%] sm:bottom-[11%] md:bottom-[11%] sm:right-1 w-[12%] sm:w-[7%] right-0  text-sm">
                     <button className="btn-control" onClick={fetchToken}>
                         start
                     </button>

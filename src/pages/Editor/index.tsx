@@ -130,7 +130,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
     // }, [])
 
 
-    
+
 
     const moveToPrev = useDoubleTap((event: any) => {
         if (currentPage > 1)
@@ -172,7 +172,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
                     </div>
                     {/* <div className='flex h-full justify-center items-center'>Link Copied to clipboard</div> */}
                     <div className='flex h-full justify-center items-center'>
-                        <div className='w-full [#f9f9f9] 2xl:h-[50px] md:h-[35px] h-[30px]  border-[1px] border-solid border-black p-[2%] rounded-sm flex justify-between'>
+                        <div className='w-full [#f9f9f9] 2xl:h-[50px] md:h-[35px] h-[30px]  border-[1px] border-solid border-black p-[5px] items-center rounded-sm flex justify-between'>
                             <span className="text-sm truncate">{shareUrl}</span>
                             <div onClick={handleCopy} className='text-[#065fd4] text-sm cursor-pointer'>COPY</div>
                         </div>
