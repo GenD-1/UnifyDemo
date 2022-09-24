@@ -12,6 +12,7 @@ import {
     useHMSStore,
     useAVToggle
 } from "@100mslive/react-sdk";
+import CursorPresence from "../../components/CursorPresence";
 import MicroPhone from "../../components/Testing/MicroPhone";
 
 function WhoIsHere({ userCount }: any) {
@@ -22,6 +23,8 @@ function WhoIsHere({ userCount }: any) {
 }
 
 function Room({ url }: any) {
+    // console.log(url);
+
 
     const others = useOthers();
 
@@ -124,6 +127,7 @@ function EditorWraped() {
 
         const { token } = await response.json();
         let newUrl = window.location.protocol + window.location.host + "/" + roomid
+        console.log(newUrl);
         setShareUrl(newUrl)
 
         handleJoint(token)
@@ -140,9 +144,12 @@ function EditorWraped() {
     return (
         <div className='h-full'>
 
-            <RoomProvider id="react-todo-app" initialPresence={{ shapes: new LiveMap(), }} initialStorage={{ shapes: new LiveMap(), }}>
+            <RoomProvider id="react-todo-app" initialPresence={{ cursor: null }} initialStorage={{ shapes: new LiveMap(), }}>
                 {/* <Suspense fallback={<div>Loading...</div>}> */}
+
+
                 <Room url={shareUrl} />
+
                 {/* </Suspense> */}
             </RoomProvider>
 

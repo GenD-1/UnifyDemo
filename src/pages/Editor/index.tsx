@@ -102,8 +102,6 @@ export const Editor = ({ shapes, shareUrl }: any) => {
     const currentPage = useStore((state: any) => state.currentPage)
     const moveToNextPage = useStore((state: any) => state.moveToNextPage)
     const moveToPrevPage = useStore((state: any) => state.moveToPrevPage)
-
-
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
 
@@ -130,6 +128,9 @@ export const Editor = ({ shapes, shareUrl }: any) => {
     //         // setPresence({ selectedShape: shapeId }, { addToHistory: true });
     //     });
     // }, [])
+
+
+    
 
     const moveToPrev = useDoubleTap((event: any) => {
         if (currentPage > 1)
