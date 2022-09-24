@@ -77,6 +77,7 @@ function EditorWraped() {
 
     const [shareUrl, setShareUrl] = useState('')
     const [roomid, setRoomId] = useState('')
+    const [newToken, setNewToken] = useState('')
 
     useEffect(() => {
 
@@ -89,7 +90,8 @@ function EditorWraped() {
         if (currentUrl[3] === '') {
             fetchRoomId();
         } else {
-            fetchToken(currentUrl[3]);
+            // fetchToken(currentUrl[3]);
+            setNewToken(currentUrl[3])
         }
 
     }, [hmsActions, isConnected]);
@@ -100,8 +102,6 @@ function EditorWraped() {
             .then(
                 async (result) => {
                     console.log(result);
-                    let newUrl = window.location.href + result.roomId
-                    setShareUrl(newUrl)
                     setRoomId(result.roomId)
                     await fetchToken(result.roomId)
                 },
@@ -123,20 +123,17 @@ function EditorWraped() {
         });
 
         const { token } = await response.json();
+        let newUrl = window.location.href + token
+        setShareUrl(newUrl)
+        setNewToken(token)
 
-        var result = '';
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        var charactersLength = characters.length;
-        for (var i = 0; i < 5; i++) {
-            result += characters.charAt(Math.floor(Math.random() *
-                charactersLength));
-        }
+    }
 
+    const handleJoint = async () => {
         await hmsActions.join({
-            userName: result,
-            authToken: token
+            userName: 'result',
+            authToken: newToken
         });
-
     }
 
 
@@ -150,8 +147,13 @@ function EditorWraped() {
             </RoomProvider>
 
 
-            {isConnected &&
-                <MicroPhone />
+            {isConnected ?
+                <MicroPhone /> :
+                <div className="control-bar">
+                    <button className="btn-control" onClick={handleJoint}>
+                        start
+                    </button>
+                </div>
             }
         </div>
     );
