@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from "react";
+
 import Avatar from '../../components/Avatar/Avatar';
 import { COLORS_PRESENCE } from '../../constants';
 import { RoomProvider, useMap, useMyPresence, useOthers } from "../../liveblocks.config";
@@ -90,20 +91,19 @@ function EditorWraped() {
         if (currentUrl[3] === '') {
             fetchRoomId();
         } else {
-            // fetchToken(currentUrl[3]);
-            setNewToken(currentUrl[3])
+            setRoomId(currentUrl[3]);
+            // fetchToken(currentUrl[3])
         }
 
     }, [hmsActions, isConnected]);
 
     const fetchRoomId = async () => {
-        await fetch("http://192.168.2.113:4001/managementToken")
+        await fetch("http://localhost:4001/managementToken")
             .then(res => res.json())
             .then(
                 async (result) => {
                     console.log(result);
                     setRoomId(result.roomId)
-                    await fetchToken(result.roomId)
                 },
                 (error) => {
                     console.log(error)
@@ -111,28 +111,28 @@ function EditorWraped() {
             )
     }
 
-    const fetchToken = async (room_id: any) => {
+    const fetchToken = async () => {
         const Id = uuidv1()
         const response = await fetch(`https://prod-in2.100ms.live/hmsapi/unifymarketplace-audio.app.100ms.live/api/token`, {
             method: 'POST',
             body: JSON.stringify({
                 user_id: Id,
                 role: 'speaker',
-                room_id,
+                room_id: roomid,
             }),
         });
 
         const { token } = await response.json();
-        let newUrl = window.location.href + token
+        let newUrl = window.location.href + roomid
         setShareUrl(newUrl)
-        setNewToken(token)
 
+        handleJoint(token)
     }
 
-    const handleJoint = async () => {
+    const handleJoint = async (token: any) => {
         await hmsActions.join({
             userName: 'result',
-            authToken: newToken
+            authToken: token
         });
     }
 
@@ -150,7 +150,7 @@ function EditorWraped() {
             {isConnected ?
                 <MicroPhone /> :
                 <div className="control-bar">
-                    <button className="btn-control" onClick={handleJoint}>
+                    <button className="btn-control" onClick={fetchToken}>
                         start
                     </button>
                 </div>
@@ -159,5 +159,5 @@ function EditorWraped() {
     );
 }
 
-    
+
 export default EditorWraped
