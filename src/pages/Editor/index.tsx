@@ -34,23 +34,23 @@ const CanvasWrapper = styled.div`
 const Area = styled.div`
     position: absolute;
     // top: 0;
-    background-color: white;
-    width: 25vw;
-    height: 25vw;
+    // background-color: white;
+    // width: 25vw;
+    // height: 25vw;
     cursor: pointer;
-    opacity: 0;
+    opacity: 1;
 `
 
 const PrevArea = styled(Area)`
-    display: block;
-    left: 0;
-    top:40%;
+    // display: block;
+    // left: 0;
+    // top:40%;
 
 `
 
 const NextArea = styled(Area)`
-    right: 0;
-    top:40%;
+    // right: 0;
+    // top:40%;
 `
 
 const LogoWrapper = styled.div`
@@ -194,11 +194,11 @@ export const Editor = ({ shapes, shareUrl }: any) => {
             </Modal>
 
 
-            <div className='overflow-hidden w-full h-full flex flex-col '>
-                <LogoWrapper className='flex justify-center items-center h-[30%]'>
+            <div className='overflow-hidden w-full sm:h-full h-[95%] flex flex-col '>
+                <LogoWrapper className='flex justify-center items-center h-[30%] mt-[10]'>
                     <img src={'assets/BrandLogo_Template.png'} alt='pic'></img>
                 </LogoWrapper>
-                <div className='flex mt-2 ml-1.5 justify-end items-center h-[6%]'>
+                <div className='flex ml-1.5 sm:mt-[-2%] mt-[5%] mb-2 justify-end items-center'>
                     <div className='flex'>
                         {others.map(({ connectionId, presence }) => {
                             if (!connectionId) {
@@ -228,16 +228,24 @@ export const Editor = ({ shapes, shareUrl }: any) => {
                     </div>
                 </CanvasWrapper>
 
-                <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[14%] sm:w-[8%] md:w-[7%]`}>
-                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm font-bold'>
-                        <img src='assets/ShareIcon.png' alt='pic'></img>
+                <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[46%]  sm:w-[8%] md:w-[7%] `}>
+                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm text-xs font-bold'>
+                        <img src='assets/ShareIcon.png' alt='pic' className={'sm:w-[50%] w-45%'}></img>
                         Share
                     </button>
                 </ActionWrapper>
 
                 <>
-                    <PrevArea {...moveToPrev} />
-                    <NextArea {...moveToNext} />
+                    <div className={`top-0 w-11/12 h-11/12`}>
+                        <PrevArea
+                            className={`block left-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 md:w-56 md:h-56  sm:w-44 sm:h-44 top-[70%] xl:top-[40%] md:top-[50%] w-24 h-24  `}
+                            {...moveToPrev} />
+                        <NextArea
+                            className={`right-0 top-[70%] xl:top-[40%] md:top-[50%] xl:w-80 xl:h-80 lg:w-80 lg:h-72 2 md:w-56 md:h-56 sm:w-44 sm:h-44 w-24 h-24 `}
+                            {...moveToNext} />
+                    </div>
+
+
                 </>
             </div>
         </div>
