@@ -31,8 +31,6 @@ export const Model = ({
 
     const [latestTap, setLatestTap] = useState(0)
 
-    const [update, setUpdate] = useState(false)
-
     const getCurrentPosition = () => {
         const diffPageCount = page - currentPage
 
@@ -95,7 +93,8 @@ export const Model = ({
                 }
 
 
-                handleChange({ id: 1, position: newPos })
+                handleChange({ id: id, position: newPos })
+
                 if (!getmodelRef.current) {
                     setTimeout(() => {
                         setModelRef(meshRef)
@@ -133,12 +132,6 @@ export const Model = ({
                 z: 0
             }
 
-            handleChange({ id: id, position: newPos })
-            // if (!getmodelRef) {
-            //     setTimeout(() => {
-            //         setModelRef(meshRef)
-            //     }, 500)
-            // }
 
             const centerPos = {
                 x: 0,
@@ -151,12 +144,14 @@ export const Model = ({
                 api.start({
                     position: [0, 0.05, 0],
                 })
+                handleChange({ id: id, position: { x: 0, y: 0.05, z: 0 } })
             } else {
                 api.start({
                     position: [
                         ...originPosition
                     ],
                 })
+                handleChange({ id: id, position: originPosition })
             }
         }
     })
@@ -175,7 +170,6 @@ export const Model = ({
     }
 
     const focusObject = (event: any) => {
-        setUpdate(true)
         event.stopPropagation()
 
         const now = new Date().getTime()

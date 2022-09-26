@@ -21,8 +21,7 @@ type Presence = {
     cursor: { x: number, y: number } | null;
     model: {
         id: string,
-        positon: { x: number, y: number, z: number },
-        modelRef: any
+        positon: { x: number, y: number, z: number }
     } | null
 }
 

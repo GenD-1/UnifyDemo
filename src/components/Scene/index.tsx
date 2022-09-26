@@ -25,14 +25,8 @@ export const Scene = () => {
     const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
     const [modelRef, setModelRef] = useState({})
 
-    // useEffect(() => {
-    //     console.log('modelRef>>>>>>>>>>>>0', modelRef);
-    // }, [modelRef])
 
     const onPointerMove = (event: any) => {
-
-        console.log(modelRef);
-
 
         updateMyPresence({
             cursor: {
@@ -45,8 +39,7 @@ export const Scene = () => {
                     x: modelPosition.position.x,
                     y: modelPosition.position.y,
                     z: modelPosition.position.z
-                },
-                modelRef: {}
+                }
             }
         })
     }
@@ -64,12 +57,8 @@ export const Scene = () => {
         const x = presence.cursor.x;
         const y = presence.cursor.y;
 
-        // console.log(presence);
-
-
         if (presence?.model?.id !== "123") {
             setTimeout(() => {
-                console.log(presence.model.modelRef);
                 setUpdateModelId(presence.model.id)
                 setModelRef(presence.model.modelRef)
                 setUpdatePosition(presence.model.positon)
@@ -172,7 +161,7 @@ export const Scene = () => {
                             setModelRef={setModelRef}
                             getmodelRef={modelRef}
                             handleChange={setModelPosition}
-                            getPosition={updatePosition}
+                            getPosition={updateModelId === item.id ? updatePosition : {}}
                             getUpdateId={updateModelId}
                         />
                     ))}

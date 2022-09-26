@@ -16,7 +16,6 @@ import MicroPhone from "../../components/Testing/MicroPhone";
 
 
 function Room({ url }: any) {
-    // console.log(url);
 
     return (
         <div
