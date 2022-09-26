@@ -20,21 +20,33 @@ export const Scene = () => {
     const pointerRef = useRef() as any
 
     const updateMyPresence = useUpdateMyPresence()
-    const [modelRef, setModelRef] = useState()
-    const [modelPosition, setModelPosition] = useState({})
+    const [updatePosition, setUpdatePosition] = useState({})
+    const [updateModelId, setUpdateModelId] = useState(0)
+    const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
+    const [modelRef, setModelRef] = useState({})
 
-    useEffect(() => {
-        console.log(modelPosition);
-    }, [modelPosition])
+    // useEffect(() => {
+    //     console.log('modelRef>>>>>>>>>>>>0', modelRef);
+    // }, [modelRef])
 
     const onPointerMove = (event: any) => {
 
-        // console.log(event.clientX,event.clientY);
+        console.log(modelRef);
+
 
         updateMyPresence({
             cursor: {
                 x: Number(pointerRef?.current?.getAzimuthalAngle()),
                 y: Number(pointerRef?.current?.getPolarAngle())
+            },
+            model: {
+                id: modelPosition.id,
+                positon: {
+                    x: modelPosition.position.x,
+                    y: modelPosition.position.y,
+                    z: modelPosition.position.z
+                },
+                modelRef: {}
             }
         })
     }
@@ -52,16 +64,21 @@ export const Scene = () => {
         const x = presence.cursor.x;
         const y = presence.cursor.y;
 
-        console.log(presence);
+        // console.log(presence);
 
+
+        if (presence?.model?.id !== "123") {
+            setTimeout(() => {
+                console.log(presence.model.modelRef);
+                setUpdateModelId(presence.model.id)
+                setModelRef(presence.model.modelRef)
+                setUpdatePosition(presence.model.positon)
+            }, 1000);
+        }
 
         pointerRef?.current?.setAzimuthalAngle(x)
 
         pointerRef?.current?.setPolarAngle(y)
-
-        if (presence.model !== null) {
-            console.log(modelRef);
-        }
 
     }
 
@@ -152,8 +169,11 @@ export const Scene = () => {
                             meshSize={item.meshSize}
                             id={item.id}
                             modelInfo={item}
-                            modelRef={setModelRef}
+                            setModelRef={setModelRef}
+                            getmodelRef={modelRef}
                             handleChange={setModelPosition}
+                            getPosition={updatePosition}
+                            getUpdateId={updateModelId}
                         />
                     ))}
 

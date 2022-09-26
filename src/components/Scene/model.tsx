@@ -8,7 +8,14 @@ import { isPointInSquare } from "../../helper/math";
 import { useEffect, useRef, useState } from "react";
 import { productExperienceUrl } from "../../constants";
 
-export const Model = ({ url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo, handleChange, modelRef }: any) => {
+export const Model = ({
+    url, scale, drawable,
+    page, index: posIndex,
+    small, meshPosition, meshSize,
+    id, modelInfo, handleChange,
+    setModelRef, getmodelRef, getPosition,
+    getUpdateId }: any) => {
+
     const model = useLoader(GLTFLoader, url) as any
 
     const meshRef = useRef() as any
@@ -23,6 +30,8 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
     const focusInfo = useStore((state: any) => state.focusInfo)
 
     const [latestTap, setLatestTap] = useState(0)
+
+    const [update, setUpdate] = useState(false)
 
     const getCurrentPosition = () => {
         const diffPageCount = page - currentPage
@@ -50,6 +59,18 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
         })
     }, [currentPage])
 
+    useEffect(() => {
+        if (getPosition.x) {
+            api.start({
+                position: [
+                    getPosition.x,
+                    getPosition.y,
+                    getPosition.z,
+                ],
+            })
+        }
+    }, [getPosition])
+
     const [spring, api] = useSpring(() => ({
         position: originPosition,
         config: { friction: 20, duration: 100 }
@@ -74,8 +95,12 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
                 }
 
 
-                handleChange(newPos)
-                modelRef(meshRef)
+                handleChange({ id: 1, position: newPos })
+                if (!getmodelRef.current) {
+                    setTimeout(() => {
+                        setModelRef(meshRef)
+                    }, 1000)
+                }
 
                 api.start({
                     position: [
@@ -108,8 +133,12 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
                 z: 0
             }
 
-            handleChange(newPos)
-            modelRef(meshRef)
+            handleChange({ id: id, position: newPos })
+            // if (!getmodelRef) {
+            //     setTimeout(() => {
+            //         setModelRef(meshRef)
+            //     }, 500)
+            // }
 
             const centerPos = {
                 x: 0,
@@ -146,6 +175,7 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
     }
 
     const focusObject = (event: any) => {
+        setUpdate(true)
         event.stopPropagation()
 
         const now = new Date().getTime()
@@ -157,7 +187,7 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
 
         setLatestTap(new Date().getTime())
     }
-
+    // || focusInfo.focusId === (getUpdateId === 0 ? null : getUpdateId)
     return (
         currentPage === page && (!focusInfo.isFocus || focusInfo.focusId === id) ? (
             <animated.mesh
