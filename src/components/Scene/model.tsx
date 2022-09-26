@@ -8,10 +8,10 @@ import { isPointInSquare } from "../../helper/math";
 import { useEffect, useRef, useState } from "react";
 import { productExperienceUrl } from "../../constants";
 
-export const Model = ({ url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo }: any) => {
+export const Model = ({ url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo, handleChange, modelRef }: any) => {
     const model = useLoader(GLTFLoader, url) as any
 
-    const meshRef = useRef(null) as any
+    const meshRef = useRef() as any
 
     const floorPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)   // x-y plane
 
@@ -73,6 +73,10 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
                     z: 0
                 }
 
+
+                handleChange(newPos)
+                modelRef(meshRef)
+
                 api.start({
                     position: [
                         newPos.x,
@@ -103,6 +107,9 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
                 y: planeIntersectPoint.y,
                 z: 0
             }
+
+            handleChange(newPos)
+            modelRef(meshRef)
 
             const centerPos = {
                 x: 0,

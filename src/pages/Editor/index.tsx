@@ -100,7 +100,7 @@ const customStylescopy = {
     },
 }
 
-export const Editor = ({ shapes, shareUrl }: any) => {
+export const Editor = ({ shareUrl }: any) => {
     const currentPage = useStore((state: any) => state.currentPage)
     const moveToNextPage = useStore((state: any) => state.moveToNextPage)
     const moveToPrevPage = useStore((state: any) => state.moveToPrevPage)

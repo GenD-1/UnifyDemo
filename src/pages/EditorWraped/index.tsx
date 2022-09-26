@@ -12,7 +12,6 @@ import {
     useHMSStore,
     useAVToggle
 } from "@100mslive/react-sdk";
-import CursorPresence from "../../components/CursorPresence";
 import MicroPhone from "../../components/Testing/MicroPhone";
 
 
@@ -112,13 +111,10 @@ function EditorWraped() {
     return (
         <div className='h-[97%]'>
 
-            <RoomProvider id="react-todo-app" initialPresence={{ cursor: null }} initialStorage={{ shapes: new LiveMap(), }}>
-                {/* <Suspense fallback={<div>Loading...</div>}> */}
-
+            <RoomProvider id="react-todo-app" initialPresence={{ cursor: null, model: null }} initialStorage={{ shapes: new LiveMap(), }}>
 
                 <Room url={shareUrl} />
 
-                {/* </Suspense> */}
             </RoomProvider>
 
 

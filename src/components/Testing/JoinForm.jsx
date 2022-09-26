@@ -17,7 +17,6 @@ function JoinForm() {
   };
 
   const handleSubmit = async (e) => {
-    console.log("sdsfsf")
     e.preventDefault();
     await hmsActions.join({
       userName: inputValues.name,

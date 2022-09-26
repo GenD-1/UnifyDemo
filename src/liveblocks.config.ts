@@ -18,8 +18,9 @@ const client = createClient({
 
 
 type Presence = {
-    cursor: { x: number, y: number } | null
-  }
+    cursor: { x: number, y: number } | null;
+    model: { id: string, x: number, y: number, z: number } | null
+}
 
 export const {
     useMyPresence,

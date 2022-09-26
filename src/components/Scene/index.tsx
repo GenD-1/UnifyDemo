@@ -9,35 +9,75 @@ import { Loader } from './Loader'
 import { chainModelProps, pendantsModelProps } from '../../constants'
 import { ZoomControl } from './CameraControl/ZoomControl'
 import { ang2Rad } from '../../helper/math'
-import { useHistory, useMyPresence, useRoom } from '../../liveblocks.config'
-import { LiveObject } from "@liveblocks/client";
-import CursorPresence from '../CursorPresence'
+import { useUpdateMyPresence, useOthers } from '../../liveblocks.config'
+
+
 
 export const Scene = () => {
     const dragInfo = useStore((state: any) => state.dragInfo)
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
     const pointerRef = useRef() as any
-    const [valueX, setValueX] = useState(0)
-    const [valueY, setValueY] = useState(0)
 
-    // useEffect(() => {
-    //     console.log(pointerRef);
-    // }, [valueX, valueY])
+    const updateMyPresence = useUpdateMyPresence()
+    const [modelRef, setModelRef] = useState()
+    const [modelPosition, setModelPosition] = useState({})
+
+    useEffect(() => {
+        console.log(modelPosition);
+    }, [modelPosition])
+
+    const onPointerMove = (event: any) => {
+
+        // console.log(event.clientX,event.clientY);
+
+        updateMyPresence({
+            cursor: {
+                x: Number(pointerRef?.current?.getAzimuthalAngle()),
+                y: Number(pointerRef?.current?.getPolarAngle())
+            }
+        })
+    }
 
 
+    const onPointerLeave = () => {
+        updateMyPresence({ cursor: null })
+    }
 
-    const handleChange = () => {
-        const x = pointerRef.current.getAzimuthalAngle()
-        const y = pointerRef.current.getPolarAngle()
+    const others = useOthers()
+    const showOther = ({ connectionId, presence, info }: any) => {
+        if (!presence?.cursor) {
+            return null
+        }
+        const x = presence.cursor.x;
+        const y = presence.cursor.y;
 
-        setValueX(x)
-        setValueY(y)
+        console.log(presence);
+
+
+        pointerRef?.current?.setAzimuthalAngle(x)
+
+        pointerRef?.current?.setPolarAngle(y)
+
+        if (presence.model !== null) {
+            console.log(modelRef);
+        }
+
     }
 
 
     return (
-        <CursorPresence positionRef={pointerRef} >
+
+        <div onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}
+            style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                touchAction: 'none'
+            }}>
+
+            {others.map(showOther)}
             <Canvas
                 gl={{ antialias: true, alpha: true, }}
                 camera={{ fov: cameraProps.fov, position: [cameraProps.position.x, cameraProps.position.y, cameraProps.position.z] }}
@@ -79,7 +119,6 @@ export const Scene = () => {
 
                 <OrbitControls
                     ref={pointerRef}
-                    onChange={handleChange}
                     minPolarAngle={focusInfo.isFocus ? ang2Rad(0) : orbitControlProps.minPolarAngle}
                     maxPolarAngle={focusInfo.isFocus ? ang2Rad(360) : orbitControlProps.maxPolarAngle}
                     minAzimuthAngle={focusInfo.isFocus ? -Infinity : orbitControlProps.minAzimuthAngle}
@@ -113,6 +152,8 @@ export const Scene = () => {
                             meshSize={item.meshSize}
                             id={item.id}
                             modelInfo={item}
+                            modelRef={setModelRef}
+                            handleChange={setModelPosition}
                         />
                     ))}
 
@@ -124,7 +165,9 @@ export const Scene = () => {
 
                 <ZoomControl />
             </Canvas>
-        </CursorPresence >
+
+
+        </div>
     )
 }
 
