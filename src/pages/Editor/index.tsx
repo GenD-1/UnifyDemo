@@ -8,6 +8,8 @@ import React, { useEffect, useState } from 'react'
 import { useBatch, useHistory, useOthers, useMap, useMyPresence } from '../../liveblocks.config'
 import { LiveObject } from "@liveblocks/client";
 import { Shape } from 'three'
+import Avatar from '../../components/Avatar/Avatar'
+import { COLORS_PRESENCE } from '../../constants';
 
 Modal.setAppElement('#root');
 
@@ -105,6 +107,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
 
+    const others = useOthers();
 
 
 
@@ -195,6 +198,25 @@ export const Editor = ({ shapes, shareUrl }: any) => {
                 <LogoWrapper className='flex justify-center items-center h-[30%]'>
                     <img src={'assets/BrandLogo_Template.png'} alt='pic'></img>
                 </LogoWrapper>
+                <div className='flex mt-2 ml-1.5 justify-end items-center h-[6%]'>
+                    <div className='flex'>
+                        {others.map(({ connectionId, presence }) => {
+                            if (!connectionId) {
+                                return null;
+                            }
+
+                            return (
+                                <Avatar
+                                    key={connectionId}
+                                    color={COLORS_PRESENCE[connectionId % COLORS_PRESENCE.length]}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div className='mx-2'>
+                        <div className="who_is_here"> {others.length} Live </div>
+                    </div>
+                </div>
 
                 <CanvasWrapper
                     className={`w-full h-full relative flex justify-center items-center `}
@@ -202,11 +224,7 @@ export const Editor = ({ shapes, shareUrl }: any) => {
                     <div
                         className={`sceneWrapper`}
                     >
-                        {/* {Array.from(shapes, ([shapeId, shape]) => {
-                            return ( */}
                         <Scene />
-                        {/* );
-                        })} */}
                     </div>
                 </CanvasWrapper>
 

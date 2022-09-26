@@ -19,7 +19,7 @@ function MicroPhone() {
 
 
   return (
-    <div className="control-bar  container mx-auto absolute bottom-[10%] sm:bottom-[11%] md:bottom-[11%] sm:right-1 w-[12%] sm:w-[7%] right-0  text-sm"
+    <div className="control-bar  container mx-auto absolute bottom-[10%] sm:bottom-[7%]  sm:right-1 w-[12%] sm:w-[7%] right-0  text-sm"
     // width: 70px;
     // position: absolute;
     // bottom: 10%;
