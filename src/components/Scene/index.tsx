@@ -23,7 +23,10 @@ export const Scene = () => {
     const [updatePosition, setUpdatePosition] = useState({})
     const [updateModelId, setUpdateModelId] = useState(0)
     const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
-    const [modelRef, setModelRef] = useState({})
+
+    // useEffect(() => {
+    //     console.log('updatePosition>>>>>', modelPosition);
+    // }, [modelPosition])
 
 
     const onPointerMove = (event: any) => {
@@ -57,12 +60,14 @@ export const Scene = () => {
         const x = presence.cursor.x;
         const y = presence.cursor.y;
 
+        console.log(presence.model.positon);
+
+
         if (presence?.model?.id !== "123") {
             setTimeout(() => {
                 setUpdateModelId(presence.model.id)
-                setModelRef(presence.model.modelRef)
                 setUpdatePosition(presence.model.positon)
-            }, 1000);
+            }, 800);
         }
 
         pointerRef?.current?.setAzimuthalAngle(x)
@@ -158,8 +163,6 @@ export const Scene = () => {
                             meshSize={item.meshSize}
                             id={item.id}
                             modelInfo={item}
-                            setModelRef={setModelRef}
-                            getmodelRef={modelRef}
                             handleChange={setModelPosition}
                             getPosition={updateModelId === item.id ? updatePosition : {}}
                             getUpdateId={updateModelId}

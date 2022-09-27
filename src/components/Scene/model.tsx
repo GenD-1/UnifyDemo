@@ -13,8 +13,8 @@ export const Model = ({
     page, index: posIndex,
     small, meshPosition, meshSize,
     id, modelInfo, handleChange,
-    setModelRef, getmodelRef, getPosition,
-    getUpdateId }: any) => {
+    getPosition, getUpdateId
+}: any) => {
 
     const model = useLoader(GLTFLoader, url) as any
 
@@ -95,11 +95,11 @@ export const Model = ({
 
                 handleChange({ id: id, position: newPos })
 
-                if (!getmodelRef.current) {
-                    setTimeout(() => {
-                        setModelRef(meshRef)
-                    }, 1000)
-                }
+                // if (!getmodelRef.current) {
+                //     setTimeout(() => {
+                //         setModelRef(meshRef)
+                //     }, 1000)
+                // }
 
                 api.start({
                     position: [
@@ -151,7 +151,9 @@ export const Model = ({
                         ...originPosition
                     ],
                 })
-                handleChange({ id: id, position: originPosition })
+                console.log('originPosition', originPosition);
+
+                handleChange({ id: id, position: { x: originPosition[0], y: originPosition[1], z: originPosition[2] } })
             }
         }
     })
