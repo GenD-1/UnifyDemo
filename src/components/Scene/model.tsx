@@ -8,10 +8,17 @@ import { isPointInSquare } from "../../helper/math";
 import { useEffect, useRef, useState } from "react";
 import { productExperienceUrl } from "../../constants";
 
-export const Model = ({ url, scale, drawable, page, index: posIndex, small, meshPosition, meshSize, id, modelInfo }: any) => {
+export const Model = ({
+    url, scale, drawable,
+    page, index: posIndex,
+    small, meshPosition, meshSize,
+    id, modelInfo, handleChange,
+    getPosition, getUpdateId
+}: any) => {
+
     const model = useLoader(GLTFLoader, url) as any
 
-    const meshRef = useRef(null) as any
+    const meshRef = useRef() as any
 
     const floorPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)   // x-y plane
 
@@ -50,6 +57,18 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
         })
     }, [currentPage])
 
+    useEffect(() => {
+        if (getPosition.y) {
+            api.start({
+                position: [
+                    getPosition.x,
+                    getPosition.y,
+                    getPosition.z,
+                ],
+            })
+        }
+    }, [getPosition])
+
     const [spring, api] = useSpring(() => ({
         position: originPosition,
         config: { friction: 20, duration: 100 }
@@ -72,6 +91,8 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
                     y: planeIntersectPoint.y,
                     z: 0
                 }
+
+                handleChange({ id: id, position: newPos })
 
                 api.start({
                     position: [
@@ -104,6 +125,7 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
                 z: 0
             }
 
+
             const centerPos = {
                 x: 0,
                 y: 0.07
@@ -115,12 +137,14 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
                 api.start({
                     position: [0, 0.05, 0],
                 })
+                handleChange({ id: id, position: { x: 0, y: 0.05, z: 0 } })
             } else {
                 api.start({
                     position: [
                         ...originPosition
                     ],
                 })
+                handleChange({ id: id, position: { x: originPosition[0], y: originPosition[1], z: originPosition[2] } })
             }
         }
     })
@@ -150,7 +174,7 @@ export const Model = ({ url, scale, drawable, page, index: posIndex, small, mesh
 
         setLatestTap(new Date().getTime())
     }
-
+    // || focusInfo.focusId === (getUpdateId === 0 ? null : getUpdateId)
     return (
         currentPage === page && (!focusInfo.isFocus || focusInfo.focusId === id) ? (
             <animated.mesh

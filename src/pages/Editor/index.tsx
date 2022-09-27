@@ -8,11 +8,13 @@ import React, { useEffect, useState } from 'react'
 import { useBatch, useHistory, useOthers, useMap, useMyPresence } from '../../liveblocks.config'
 import { LiveObject } from "@liveblocks/client";
 import { Shape } from 'three'
+import Avatar from '../../components/Avatar/Avatar'
+import { COLORS_PRESENCE } from '../../constants';
 
 Modal.setAppElement('#root');
 
 const CanvasWrapper = styled.div`
-    height: calc(90% - 40px);
+    // height: calc(90% - 40px);
 
     .sceneWrapper {
         width: 100%;
@@ -31,27 +33,30 @@ const CanvasWrapper = styled.div`
 
 const Area = styled.div`
     position: absolute;
-    top: 0;
-    background-color: white;
-    width: 25vw;
-    height: 25vw;
+    // top: 0;
+    // background-color: white;
+    // width: 25vw;
+    // height: 25vw;
     cursor: pointer;
-    opacity: 0;
+    opacity: 1;
 `
 
 const PrevArea = styled(Area)`
-    display: block;
-    left: 0;
+    // display: block;
+    // left: 0;
+    // top:40%;
+
 `
 
 const NextArea = styled(Area)`
-    right: 0;
+    // right: 0;
+    // top:40%;
 `
 
 const LogoWrapper = styled.div`
     position: relative;
     max-height: 10%;
-    padding: 20px 0;
+    padding: 5px 0;
 
     img {
         max-width: 80%;
@@ -61,7 +66,6 @@ const LogoWrapper = styled.div`
 
 const ActionWrapper = styled.div`
     position: fixed;
-    right: 1%;
     bottom: 1%;
 
     img {
@@ -77,10 +81,11 @@ const customStyles = {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        width: '30%',
-        height: '40%'
+        width: '50%',
+        height: '25%',
     },
-};
+
+}
 
 const customStylescopy = {
     content: {
@@ -95,38 +100,14 @@ const customStylescopy = {
     },
 }
 
-export const Editor = ({ shapes }: any) => {
+export const Editor = ({ shareUrl }: any) => {
     const currentPage = useStore((state: any) => state.currentPage)
     const moveToNextPage = useStore((state: any) => state.moveToNextPage)
     const moveToPrevPage = useStore((state: any) => state.moveToPrevPage)
-
-
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
-    
 
-
-
-    // const batch = useBatch();
-    // const history = useHistory();
-    // const others = useOthers();
-
-    // function getRandomInt(max: any) {
-    //     return Math.floor(Math.random() * max);
-    // }
-
-    // useEffect(() => {
-    //     batch(() => {
-    //         const shapeId = Date.now().toString();
-    //         const shape = new LiveObject({
-    //             x: getRandomInt(300),
-    //             y: getRandomInt(300),
-    //             fill: "pink",
-    //         });
-    //         // shapes.set(shapeId, shape);
-    //         // setPresence({ selectedShape: shapeId }, { addToHistory: true });
-    //     });
-    // }, [])
+    const others = useOthers();
 
     const moveToPrev = useDoubleTap((event: any) => {
         if (currentPage > 1)
@@ -144,7 +125,7 @@ export const Editor = ({ shapes }: any) => {
     }
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(window.location.href)
+        navigator.clipboard.writeText(shareUrl)
         setCopyModelOpen(true)
         setTimeout(() => {
             setCopyModelOpen(false)
@@ -153,11 +134,12 @@ export const Editor = ({ shapes }: any) => {
     }
 
     return (
-        <div>
+        <div className='h-[100%]'>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => handleModal(false)}
-                style={customStyles}
+                // style={customStyles}
+                className="md:w-1/2 w-9/12 h-[20%]  translate-x-1/2 translate-y-1/2 bg-white inset-auto 2xl:mt-[10%] lg:mt-[15%] md:mt-[20%] sm:mt-[15%] mt-[40%]  md:ml-[0px] ml-[-25%] mr-[50%] p-5"
                 contentLabel="Example Modal"
             >
                 <div className='flex flex-col h-full'>
@@ -167,9 +149,9 @@ export const Editor = ({ shapes }: any) => {
                     </div>
                     {/* <div className='flex h-full justify-center items-center'>Link Copied to clipboard</div> */}
                     <div className='flex h-full justify-center items-center'>
-                        <div className='w-10/12 bg-[#f9f9f9] h-[35px] border-[1px] border-solid border-black p-[1%] rounded-sm flex justify-between'>
-                            <span>{window.location.href}</span>
-                            <div onClick={handleCopy} className='text-[#065fd4] cursor-pointer'>COPY</div>
+                        <div className='w-full [#f9f9f9] 2xl:h-[50px] md:h-[35px] h-[30px]  border-[1px] border-solid border-black p-[5px] items-center rounded-sm flex justify-between'>
+                            <span className="text-sm truncate">{shareUrl}</span>
+                            <div onClick={handleCopy} className='text-[#065fd4] text-sm cursor-pointer'>COPY</div>
                         </div>
                     </div>
                 </div>
@@ -186,35 +168,63 @@ export const Editor = ({ shapes }: any) => {
             </Modal>
 
 
-            <div className='overflow-hidden w-screen h-screen flex flex-col'>
-                <LogoWrapper className='flex justify-center items-center'>
+            <div className='overflow-hidden w-full sm:h-full h-[95%] flex flex-col '>
+                <LogoWrapper className='flex justify-center items-center h-[30%] mt-[10]'>
                     <img src={'assets/BrandLogo_Template.png'} alt='pic'></img>
                 </LogoWrapper>
+                <div className='flex ml-1.5 sm:mt-[-2%] mt-[5%] mb-2 justify-end items-center'>
+                    <div className='flex'>
+                        {others.map(({ connectionId, presence }) => {
+                            if (!connectionId) {
+                                return null;
+                            }
+
+                            return (
+                                <Avatar
+                                    key={connectionId}
+                                    color={COLORS_PRESENCE[connectionId % COLORS_PRESENCE.length]}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div className='mx-2'>
+                        <div className="who_is_here"> {others.length} Live </div>
+                    </div>
+                </div>
 
                 <CanvasWrapper
-                    className={`w-full h-full relative flex justify-center items-center`}
+                    className={`w-full h-full relative flex justify-center items-center `}
                 >
                     <div
                         className={`sceneWrapper`}
                     >
-                        {/* {Array.from(shapes, ([shapeId, shape]) => {
-                            return ( */}
-                        <Scene />
-                        {/* );
-                        })} */}
+                        <Scene
+                            Prev={moveToPrev}
+                            Next={moveToNext}
+                        />
                     </div>
                 </CanvasWrapper>
 
-                <ActionWrapper>
-                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center font-bold'>
-                        <img src='assets/ShareIcon.png' alt='pic'></img>
-                        Share
-                    </button>
-                </ActionWrapper>
+                {shareUrl &&
+                    <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[46%]  sm:w-[8%] md:w-[7%] `}>
+                        <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm text-xs font-bold'>
+                            <img src='assets/ShareIcon.png' alt='pic' className={'sm:w-[50%] w-45%'}></img>
+                            Share
+                        </button>
+                    </ActionWrapper>
 
+                }
                 <>
-                    <PrevArea {...moveToPrev} />
-                    <NextArea {...moveToNext} />
+                    <div className={`top-0 w-11/12 h-11/12`}>
+                        <PrevArea
+                            className={`block left-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 md:w-56 md:h-56  sm:w-44 sm:h-44 top-[70%] xl:top-[40%] md:top-[50%] w-24 h-24  `}
+                            {...moveToPrev} />
+                        <NextArea
+                            className={`right-0 top-[70%] xl:top-[40%] md:top-[50%] xl:w-80 xl:h-80 lg:w-80 lg:h-72 2 md:w-56 md:h-56 sm:w-44 sm:h-44 w-24 h-24 `}
+                            {...moveToNext} />
+                    </div>
+
+
                 </>
             </div>
         </div>
