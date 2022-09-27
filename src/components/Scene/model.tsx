@@ -58,7 +58,7 @@ export const Model = ({
     }, [currentPage])
 
     useEffect(() => {
-        if (getPosition.x) {
+        if (getPosition.y) {
             api.start({
                 position: [
                     getPosition.x,
@@ -92,14 +92,7 @@ export const Model = ({
                     z: 0
                 }
 
-
                 handleChange({ id: id, position: newPos })
-
-                // if (!getmodelRef.current) {
-                //     setTimeout(() => {
-                //         setModelRef(meshRef)
-                //     }, 1000)
-                // }
 
                 api.start({
                     position: [
@@ -151,8 +144,6 @@ export const Model = ({
                         ...originPosition
                     ],
                 })
-                console.log('originPosition', originPosition);
-
                 handleChange({ id: id, position: { x: originPosition[0], y: originPosition[1], z: originPosition[2] } })
             }
         }

@@ -60,9 +60,6 @@ export const Scene = () => {
         const x = presence.cursor.x;
         const y = presence.cursor.y;
 
-        console.log(presence.model.positon);
-
-
         if (presence?.model?.id !== "123") {
             setTimeout(() => {
                 setUpdateModelId(presence.model.id)
