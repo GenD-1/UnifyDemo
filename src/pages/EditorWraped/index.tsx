@@ -110,7 +110,7 @@ function EditorWraped() {
     return (
         <div className='h-[97%]'>
 
-            <RoomProvider id="react-todo-app" initialPresence={{ cursor: null, model: null }} initialStorage={{ shapes: new LiveMap(), }}>
+            <RoomProvider id="react-todo-app" initialPresence={{ cursor: null, model: null, currentPage: null }} initialStorage={{ shapes: new LiveMap(), }}>
 
                 <Room url={shareUrl} />
 
@@ -121,7 +121,7 @@ function EditorWraped() {
                 <MicroPhone /> :
                 <div className="control-bar container mx-auto absolute bottom-[3%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
                     <button className="btn-control" onClick={fetchToken}>
-                        start
+                        Start
                     </button>
                 </div>
             }

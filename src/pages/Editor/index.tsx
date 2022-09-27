@@ -109,32 +109,6 @@ export const Editor = ({ shareUrl }: any) => {
 
     const others = useOthers();
 
-
-
-    // const batch = useBatch();
-    // const history = useHistory();
-    // const others = useOthers();
-
-    // function getRandomInt(max: any) {
-    //     return Math.floor(Math.random() * max);
-    // }
-
-    // useEffect(() => {
-    //     batch(() => {
-    //         const shapeId = Date.now().toString();
-    //         const shape = new LiveObject({
-    //             x: getRandomInt(300),
-    //             y: getRandomInt(300),
-    //             fill: "pink",
-    //         });
-    //         // shapes.set(shapeId, shape);
-    //         // setPresence({ selectedShape: shapeId }, { addToHistory: true });
-    //     });
-    // }, [])
-
-
-
-
     const moveToPrev = useDoubleTap((event: any) => {
         if (currentPage > 1)
             moveToPrevPage()
@@ -224,17 +198,22 @@ export const Editor = ({ shareUrl }: any) => {
                     <div
                         className={`sceneWrapper`}
                     >
-                        <Scene />
+                        <Scene
+                            Prev={moveToPrev}
+                            Next={moveToNext}
+                        />
                     </div>
                 </CanvasWrapper>
 
-                <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[46%]  sm:w-[8%] md:w-[7%] `}>
-                    <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm text-xs font-bold'>
-                        <img src='assets/ShareIcon.png' alt='pic' className={'sm:w-[50%] w-45%'}></img>
-                        Share
-                    </button>
-                </ActionWrapper>
+                {shareUrl &&
+                    <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[46%]  sm:w-[8%] md:w-[7%] `}>
+                        <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm text-xs font-bold'>
+                            <img src='assets/ShareIcon.png' alt='pic' className={'sm:w-[50%] w-45%'}></img>
+                            Share
+                        </button>
+                    </ActionWrapper>
 
+                }
                 <>
                     <div className={`top-0 w-11/12 h-11/12`}>
                         <PrevArea

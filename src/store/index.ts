@@ -12,6 +12,9 @@ const useStore = create((set) => ({
 	})),
 
 	currentPage: 1,
+	setCurrentPage: (payload: any) => set(produce((state: any) => {
+		state.currentPage = payload.page
+	})),
 	moveToNextPage: () => set(produce((state: any) => {
 		state.currentPage += 1
 	})),
@@ -22,7 +25,7 @@ const useStore = create((set) => ({
 	focusInfo: {
 		isFocus: false,
 		position: [0, 0, 0],
-		prevCamPosition: [ cameraProps.position.x, cameraProps.position.y, cameraProps.position.z ],
+		prevCamPosition: [cameraProps.position.x, cameraProps.position.y, cameraProps.position.z],
 		focusId: -1,
 	},
 	setFocusInfo: (payload: any) => set(produce((state: any) => {

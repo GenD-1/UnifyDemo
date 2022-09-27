@@ -10,10 +10,11 @@ import { chainModelProps, pendantsModelProps } from '../../constants'
 import { ZoomControl } from './CameraControl/ZoomControl'
 import { ang2Rad } from '../../helper/math'
 import { useUpdateMyPresence, useOthers } from '../../liveblocks.config'
+import { classicNameResolver } from 'typescript'
 
 
 
-export const Scene = () => {
+export const Scene = ({ Prev, Next }: any) => {
     const dragInfo = useStore((state: any) => state.dragInfo)
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
@@ -23,11 +24,12 @@ export const Scene = () => {
     const [updatePosition, setUpdatePosition] = useState({})
     const [updateModelId, setUpdateModelId] = useState(0)
     const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
+    const currentPage = useStore((state: any) => state.currentPage)
+    const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
     // useEffect(() => {
-    //     console.log('updatePosition>>>>>', modelPosition);
-    // }, [modelPosition])
-
+    //     console.log('currentPage>>>>>', currentPage);
+    // }, [currentPage])
 
     const onPointerMove = (event: any) => {
 
@@ -43,10 +45,10 @@ export const Scene = () => {
                     y: modelPosition.position.y,
                     z: modelPosition.position.z
                 }
-            }
+            },
+            currentPage: currentPage
         })
     }
-
 
     const onPointerLeave = () => {
         updateMyPresence({ cursor: null })
@@ -59,6 +61,14 @@ export const Scene = () => {
         }
         const x = presence.cursor.x;
         const y = presence.cursor.y;
+
+        const page = presence.currentPage
+
+        setTimeout(() => {
+            setCurrentPage({
+                page
+            })
+        }, 1000);
 
         if (presence?.model?.id !== "123") {
             setTimeout(() => {
