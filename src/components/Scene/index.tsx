@@ -50,6 +50,7 @@ export const Scene = ({ Prev, Next }: any) => {
         })
     }
 
+
     const onPointerLeave = () => {
         updateMyPresence({ cursor: null })
     }
