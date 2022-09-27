@@ -67,7 +67,7 @@ function EditorWraped() {
     }, [hmsActions, isConnected]);
 
     const fetchRoomId = async () => {
-        await fetch("http://localhost:4001/managementToken")
+        await fetch("https://backend-unify.herokuapp.com/managementToken")
             .then(res => res.json())
             .then(
                 async (result) => {
