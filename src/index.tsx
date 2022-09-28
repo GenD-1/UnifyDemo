@@ -10,13 +10,11 @@ import './theme/global.scss'
 import { HMSRoomProvider } from "@100mslive/react-sdk";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Router>
-      <HMSRoomProvider>
-        <App />
-      </HMSRoomProvider>
-    </Router>
-  </React.StrictMode>
+  <Router>
+    <HMSRoomProvider>
+      <App />
+    </HMSRoomProvider>
+  </Router>
 )
 
 // If you want your app to work offline and load faster, you can change

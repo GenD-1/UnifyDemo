@@ -40,14 +40,13 @@ function PageShow({ shareUrl }: any) {
     }
 }
 
-function EditorWraped() {
+function EditorWraped({ roomName }: any) {
 
     const isConnected = useHMSStore(selectIsConnectedToRoom);
     const hmsActions = useHMSActions();
 
     const [shareUrl, setShareUrl] = useState('')
-    const [roomid, setRoomId] = useState('')
-    const [newToken, setNewToken] = useState('')
+    const [roomId, setRoomId] = useState('')
 
     useEffect(() => {
 
@@ -56,22 +55,26 @@ function EditorWraped() {
                 hmsActions.leave();
             }
         };
+
+    }, [hmsActions, isConnected]);
+
+    useEffect(() => {
         let currentUrl = (window.location.href).split('/')
+
         if (currentUrl[3] === '') {
             fetchRoomId();
         } else {
             setRoomId(currentUrl[3]);
-            // fetchToken(currentUrl[3])
         }
 
-    }, [hmsActions, isConnected]);
+    }, [])
+
 
     const fetchRoomId = async () => {
         await fetch("https://backend-unify.herokuapp.com/managementToken")
             .then(res => res.json())
             .then(
                 async (result) => {
-                    console.log(result);
                     setRoomId(result.roomId)
                 },
                 (error) => {
@@ -87,12 +90,12 @@ function EditorWraped() {
             body: JSON.stringify({
                 user_id: Id,
                 role: 'speaker',
-                room_id: roomid,
+                room_id: roomId,
             }),
         });
 
         const { token } = await response.json();
-        let newUrl = window.location.protocol + window.location.host + "/" + roomid
+        let newUrl = window.location.protocol + window.location.host + "/" + roomId + "/" + roomName
         console.log(newUrl);
         setShareUrl(newUrl)
 
@@ -109,23 +112,26 @@ function EditorWraped() {
 
     return (
         <div className='h-[97%]'>
+            {roomName &&
 
-            <RoomProvider id="unify-marketplace-template" initialPresence={{ cursor: null, model: null, currentPage: null }} initialStorage={{ shapes: new LiveMap(), }}>
+                <RoomProvider id={roomName} initialPresence={{ cursor: null, model: null, currentPage: null }} initialStorage={{ shapes: new LiveMap(), }}>
 
-                <Room url={shareUrl} />
+                    <Room url={shareUrl} />
 
-            </RoomProvider>
+                </RoomProvider>
 
-
-            {isConnected ?
-                <MicroPhone /> :
-                <div className="control-bar container mx-auto absolute bottom-[3%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
-                    <button className="btn-control" onClick={fetchToken}>
-                        Start
-                    </button>
-                </div>
             }
-        </div>
+
+            {
+                isConnected ?
+                    <MicroPhone /> :
+                    <div className="control-bar container mx-auto absolute bottom-[3%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
+                        <button className="btn-control" onClick={fetchToken}>
+                            Start
+                        </button>
+                    </div>
+            }
+        </div >
     );
 }
 
