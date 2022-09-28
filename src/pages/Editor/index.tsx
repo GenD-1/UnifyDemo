@@ -170,7 +170,7 @@ export const Editor = ({ shareUrl }: any) => {
 
             <div className='overflow-hidden w-full sm:h-full h-[95%] flex flex-col '>
                 <LogoWrapper className='flex justify-center items-center h-[30%] mt-[10]'>
-                    <img src={'assets/BrandLogo_Template.png'} alt='pic'></img>
+                    <img src={'/assets/BrandLogo_Template.png'} alt='pic'></img>
                 </LogoWrapper>
                 <div className='flex ml-1.5 sm:mt-[-2%] mt-[5%] mb-2 justify-end items-center'>
                     <div className='flex'>
@@ -198,17 +198,14 @@ export const Editor = ({ shareUrl }: any) => {
                     <div
                         className={`sceneWrapper`}
                     >
-                        <Scene
-                            Prev={moveToPrev}
-                            Next={moveToNext}
-                        />
+                        <Scene />
                     </div>
                 </CanvasWrapper>
 
                 {shareUrl &&
                     <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[46%]  sm:w-[8%] md:w-[7%] `}>
                         <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm text-xs font-bold'>
-                            <img src='assets/ShareIcon.png' alt='pic' className={'sm:w-[50%] w-45%'}></img>
+                            <img src='/assets/ShareIcon.png' alt='pic' className={'sm:w-[50%] w-45%'}></img>
                             Share
                         </button>
                     </ActionWrapper>

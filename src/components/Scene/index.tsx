@@ -10,11 +10,10 @@ import { chainModelProps, pendantsModelProps } from '../../constants'
 import { ZoomControl } from './CameraControl/ZoomControl'
 import { ang2Rad } from '../../helper/math'
 import { useUpdateMyPresence, useOthers } from '../../liveblocks.config'
-import { classicNameResolver } from 'typescript'
 
 
 
-export const Scene = ({ Prev, Next }: any) => {
+export const Scene = () => {
     const dragInfo = useStore((state: any) => state.dragInfo)
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
@@ -28,10 +27,15 @@ export const Scene = ({ Prev, Next }: any) => {
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
     // useEffect(() => {
-    //     console.log('currentPage>>>>>', currentPage);
+    //     setModelPage(currentPage)
     // }, [currentPage])
 
     const onPointerMove = (event: any) => {
+
+
+        // if (modelPage !== currentPage) {
+        //     setModelPosition({ id: '123', position: { x: 0, y: 0, z: 0 } })
+        // }
 
         updateMyPresence({
             cursor: {
@@ -52,7 +56,7 @@ export const Scene = ({ Prev, Next }: any) => {
 
 
     const onPointerLeave = () => {
-        updateMyPresence({ cursor: null })
+        updateMyPresence({ cursor: null, model: null })
     }
 
     const others = useOthers()
@@ -65,17 +69,17 @@ export const Scene = ({ Prev, Next }: any) => {
 
         const page = presence.currentPage
 
-        setTimeout(() => {
+        if (currentPage !== page) {
             setCurrentPage({
                 page
             })
-        }, 1000);
+        }
 
-        if (presence?.model?.id !== "123") {
+        if (presence?.model?.id !== "123" && currentPage === page) {
             setTimeout(() => {
                 setUpdateModelId(presence.model.id)
                 setUpdatePosition(presence.model.positon)
-            }, 800);
+            }, 500);
         }
 
         pointerRef?.current?.setAzimuthalAngle(x)
