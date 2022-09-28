@@ -110,7 +110,7 @@ function EditorWraped() {
     return (
         <div className='h-[97%]'>
 
-            <RoomProvider id="react-todo-app" initialPresence={{ cursor: null, model: null, currentPage: null }} initialStorage={{ shapes: new LiveMap(), }}>
+            <RoomProvider id="unify-marketplace-template" initialPresence={{ cursor: null, model: null, currentPage: null }} initialStorage={{ shapes: new LiveMap(), }}>
 
                 <Room url={shareUrl} />
 
