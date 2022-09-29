@@ -89,14 +89,13 @@ const customStyles = {
 
 const customStylescopy = {
     content: {
-        top: '90%',
-        left: '10%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        width: '15%',
-        height: '8%',
+        padding: '10px',
+        transform: ' translateX( -50%)',
+        width: '80%',
+        bottom: '20px',
+        left: ' 50%',
+        background: 'rgb(255, 255, 255)',
+        borderRadius: '4px',
     },
 }
 
@@ -161,6 +160,7 @@ export const Editor = ({ shareUrl }: any) => {
                 isOpen={copyModelOpen}
                 style={customStylescopy}
                 contentLabel="Example Modal"
+                className='fixed'
             >
                 <div className='flex flex-col'>
                     <div className='flex justify-center items-center'>Link Copied to clipboard</div>
