@@ -95,7 +95,9 @@ function EditorWraped({ roomName }: any) {
         });
 
         const { token } = await response.json();
-        let newUrl = window.location.protocol + window.location.host + "/" + roomId + "/" + roomName
+
+
+        let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomId + "/" + roomName
         console.log(newUrl);
         setShareUrl(newUrl)
 
@@ -125,7 +127,7 @@ function EditorWraped({ roomName }: any) {
             {
                 isConnected ?
                     <MicroPhone /> :
-                    <div className="control-bar container mx-auto absolute bottom-[3%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
+                    <div className="control-bar container mx-auto fixed bottom-[3%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
                         <button className="btn-control" onClick={fetchToken}>
                             Start
                         </button>
