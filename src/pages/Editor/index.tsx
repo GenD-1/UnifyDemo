@@ -10,6 +10,9 @@ import { LiveObject } from "@liveblocks/client";
 import { Shape } from 'three'
 import Avatar from '../../components/Avatar/Avatar'
 import { COLORS_PRESENCE } from '../../constants';
+import CopyToClipboard from "react-copy-to-clipboard"
+
+
 
 Modal.setAppElement('#root');
 
@@ -105,6 +108,7 @@ export const Editor = ({ shareUrl }: any) => {
     const moveToPrevPage = useStore((state: any) => state.moveToPrevPage)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
+    const [copied, setCopied] = useState(false) as any
 
     const others = useOthers();
 
@@ -130,6 +134,7 @@ export const Editor = ({ shareUrl }: any) => {
             setCopyModelOpen(false)
             handleModal(false)
         }, 2000)
+
     }
 
     return (
@@ -146,15 +151,28 @@ export const Editor = ({ shareUrl }: any) => {
                         <div>Share</div>
                         <img onClick={() => handleModal(false)} src='assets/close.png' alt='close' className='w-6 ml-auto cursor-pointer'></img>
                     </div>
-                    {/* <div className='flex h-full justify-center items-center'>Link Copied to clipboard</div> */}
                     <div className='flex h-full justify-center items-center'>
                         <div className='w-full [#f9f9f9] 2xl:h-[50px] md:h-[35px] h-[30px]  border-[1px] border-solid border-black p-[5px] items-center rounded-sm flex justify-between'>
                             <span className="text-sm truncate">{shareUrl}</span>
-                            <div onClick={handleCopy} className='text-[#065fd4] text-sm cursor-pointer'>COPY</div>
+
+                            <CopyToClipboard text={shareUrl}
+                                onCopy={() => {
+                                    setCopied(true)
+                                    setCopyModelOpen(true)
+                                    setTimeout(() => {
+                                        setCopyModelOpen(false)
+                                        handleModal(false);
+                                        setCopied(false)
+                                    }, 2000)
+                                }
+                                }>
+                                <button className='text-[#065fd4] text-sm cursor-pointer'>COPY</button>
+                            </CopyToClipboard>
+
                         </div>
                     </div>
                 </div>
-            </Modal>
+            </Modal >
 
             <Modal
                 isOpen={copyModelOpen}
@@ -163,7 +181,7 @@ export const Editor = ({ shareUrl }: any) => {
                 className='fixed'
             >
                 <div className='flex flex-col'>
-                    <div className='flex justify-center items-center'>Link Copied to clipboard</div>
+                    <div className='flex justify-center items-center'>  {copied ? <span style={{ color: 'red' }} className='flex h-full justify-center items-center'>Copied.</span> : null}</div>
                 </div>
             </Modal>
 
@@ -224,7 +242,7 @@ export const Editor = ({ shareUrl }: any) => {
 
                 </>
             </div>
-        </div>
+        </div >
     )
 }
 
