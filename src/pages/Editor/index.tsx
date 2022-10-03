@@ -211,7 +211,7 @@ export const Editor = ({ shareUrl }: any) => {
                 </div>
 
                 <CanvasWrapper
-                    className={`w-full h-full relative flex justify-center items-center `}
+                    className={`w-full h-[75%] relative flex justify-center items-center `}
                 >
                     <div
                         className={`sceneWrapper`}
@@ -223,7 +223,7 @@ export const Editor = ({ shareUrl }: any) => {
                 {shareUrl &&
                     <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[46%]  sm:w-[8%] md:w-[7%] `}>
                         <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm text-xs font-bold'>
-                            <img src='/assets/ShareIcon.png' alt='pic' className={'sm:w-[50%] w-45%'}></img>
+                            <img src='/assets/ShareIcon.png' alt='pic' className={'sm:w-[45%] w-45%'}></img>
                             Share
                         </button>
                     </ActionWrapper>
