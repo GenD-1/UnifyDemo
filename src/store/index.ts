@@ -30,6 +30,11 @@ const useStore = create((set) => ({
 	},
 	setFocusInfo: (payload: any) => set(produce((state: any) => {
 		state.focusInfo = payload
+	})),
+
+	isModelLoaded: false,
+	setIsModelLoaded: (payload: any) => set(produce((state: any) => {
+		state.isModelLoaded = payload
 	}))
 }))
 

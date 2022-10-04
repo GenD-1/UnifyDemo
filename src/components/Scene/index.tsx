@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { ambientLightProps, backgroundColor, cameraProps, modelScaleValue, orbitControlProps, spotLightProps, spotLightProps2 } from '../../constants/scene'
 import useStore from '../../store'
-import { OrbitControls } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import Model from './model'
 import ChainModel from './chain'
@@ -64,6 +64,7 @@ export const Scene = () => {
         if (!presence?.cursor) {
             return null
         }
+
         const x = presence.cursor.x;
         const y = presence.cursor.y;
 
@@ -88,9 +89,7 @@ export const Scene = () => {
 
     }
 
-
     return (
-
         <div onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}
             style={{
                 position: 'relative',
@@ -106,38 +105,13 @@ export const Scene = () => {
                 camera={{ fov: cameraProps.fov, position: [cameraProps.position.x, cameraProps.position.y, cameraProps.position.z] }}
                 shadows
             >
+                <Environment files={'/assets/hdr/evening_road_01_2k.hdr'} ></Environment>
+
                 <color attach="background" args={[backgroundColor]} />
 
                 <ambientLight
                     color={ambientLightProps.color}
-                />
-
-                <spotLight
-                    color={spotLightProps.color}
-                    castShadow={spotLightProps.castShadow}
-                    position={[-spotLightProps.position.x, spotLightProps.position.y, spotLightProps.position.z]}
-                    intensity={spotLightProps.intensity}
-                />
-
-                <spotLight
-                    color={spotLightProps.color}
-                    castShadow={spotLightProps.castShadow}
-                    position={[-spotLightProps.position.x, spotLightProps.position.y, -spotLightProps.position.z]}
-                    intensity={spotLightProps.intensity}
-                />
-
-                <spotLight
-                    color={spotLightProps2.color}
-                    castShadow={spotLightProps2.castShadow}
-                    position={[-spotLightProps2.position.x, spotLightProps2.position.y, spotLightProps2.position.z]}
-                    intensity={spotLightProps2.intensity}
-                />
-
-                <spotLight
-                    color={spotLightProps2.color}
-                    castShadow={spotLightProps2.castShadow}
-                    position={[-spotLightProps2.position.x, spotLightProps2.position.y, -spotLightProps2.position.z]}
-                    intensity={spotLightProps2.intensity}
+                    intensity={0.5}
                 />
 
                 <OrbitControls
@@ -166,7 +140,7 @@ export const Scene = () => {
                         <Model
                             key={`pendantsmodel${index}`}
                             url={item.src}
-                            scale={[scaleValue, scaleValue, scaleValue]}
+                            scale={ item.small ? [scaleValue, scaleValue, scaleValue] : [scaleValue / 1.5, scaleValue / 1.5, scaleValue / 1.5]}
                             drawable={item.drawable}
                             page={item.page}
                             index={item.pageIndex}
@@ -181,10 +155,10 @@ export const Scene = () => {
                         />
                     ))}
 
-                    {/* <mesh position={[0, 0.07, 0]}>
-                    <boxGeometry args={[0.04, 0.04, 0.001]} />
-                    <meshBasicMaterial color={'red'} />
-                </mesh> */}
+                    {/* <mesh position={[0, 0.138, 0]}>
+                        <boxGeometry args={[0.075, 0.075, 0.001]} />
+                        <meshBasicMaterial color={'red'} />
+                    </mesh> */}
                 </Suspense>
 
                 <ZoomControl />

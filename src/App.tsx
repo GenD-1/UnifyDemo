@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom'
+import Editor from './pages/Editor';
 import EditorWraped from './pages/EditorWraped';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<EditorWraped roomName={roomName} />} />
         <Route path="/:id/:roomName" element={<EditorWraped roomName={roomName} />} />
         {/* <Route path="*" element={<Navigate to="/" />}/> */}
+        {/* <Route path="/" element={<Editor />} /> */}
       </Routes>
     </div>
   );

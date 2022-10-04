@@ -29,15 +29,17 @@ export const Model = ({
 
     const focusInfo = useStore((state: any) => state.focusInfo)
 
+    const setIsModelLoaded = useStore((state: any) => state.setIsModelLoaded)
+
     const [latestTap, setLatestTap] = useState(0)
 
     const getCurrentPosition = () => {
         const diffPageCount = page - currentPage
 
-        const diffOffset = diffPageCount * 0.06 * 3
+        const diffOffset = diffPageCount * 0.08 * 3
 
         const curPosition = [
-            0.06 * (-1 + posIndex) + diffOffset,
+            0.08 * (-1 + posIndex) + diffOffset,
             small ? -0.05 : 0,
             0
         ]
@@ -68,6 +70,10 @@ export const Model = ({
             })
         }
     }, [getPosition])
+
+    useEffect(() => {
+        setIsModelLoaded(true)
+    }, [])
 
     const [spring, api] = useSpring(() => ({
         position: originPosition,
@@ -128,16 +134,16 @@ export const Model = ({
 
             const centerPos = {
                 x: 0,
-                y: 0.07
+                y: 0.138
             }
 
-            const len = 0.02
+            const len = 0.0375
 
             if (isPointInSquare(newPos, centerPos, len)) {
                 api.start({
-                    position: [0, 0.05, 0],
+                    position: [0, 0.103, 0],
                 })
-                handleChange({ id: id, position: { x: 0, y: 0.05, z: 0 } })
+                handleChange({ id: id, position: { x: 0, y: 0.103, z: 0 } })
             } else {
                 api.start({
                     position: [

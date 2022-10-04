@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Apple Chancery';
+    src: local('Apple Chancery'),
+         url('../assets/fonts/Apple Chancery.ttf') format('truetype'), /* Super Modern Browsers */
+}
+
 body {
     font-family: 'Inter' !important;
     background-color: #f8f8f8;

@@ -263,7 +263,7 @@ export const pendantsModelProps = [
 
 export const chainModelProps = {
     src: '/models/charm_pinchlock_mobile_gold.glb',
-    position: [0, 0.05, 0]
+    position: [0, 0.1, 0]
 }
 
 export const pendantShowCount = 3

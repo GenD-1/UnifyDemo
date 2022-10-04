@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { useDoubleTap } from 'use-double-tap'
 import Scene from '../../components/Scene'
 import { pendantShowCount, pendantsModelProps } from '../../constants'
@@ -76,6 +76,23 @@ const ActionWrapper = styled.div`
     }
 `
 
+const opacityAnimation1 = keyframes`
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+`
+
+const DragDesc = styled.div`
+    position: absolute;
+    top: 60%;
+    font-family: Apple Chancery;
+    font-size: 1.7rem;
+
+    animation: ${opacityAnimation1} 5s;
+    animation-fill-mode: forwards;
+`
+
 const customStyles = {
     content: {
         top: '50%',
@@ -106,6 +123,7 @@ export const Editor = ({ shareUrl }: any) => {
     const currentPage = useStore((state: any) => state.currentPage)
     const moveToNextPage = useStore((state: any) => state.moveToNextPage)
     const moveToPrevPage = useStore((state: any) => state.moveToPrevPage)
+    const isModelLoaded = useStore((state: any) => state.isModelLoaded)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
     const [copied, setCopied] = useState(false) as any
@@ -218,6 +236,12 @@ export const Editor = ({ shareUrl }: any) => {
                     >
                         <Scene />
                     </div>
+
+                    { isModelLoaded ? (
+                        <DragDesc>
+                            {`Drag & Drop!`}
+                        </DragDesc>
+                    ): null }
                 </CanvasWrapper>
 
                 {shareUrl &&
@@ -238,8 +262,6 @@ export const Editor = ({ shareUrl }: any) => {
                             className={`right-0 top-[70%] xl:top-[40%] md:top-[50%] xl:w-80 xl:h-80 lg:w-80 lg:h-72 2 md:w-56 md:h-56 sm:w-44 sm:h-44 w-24 h-24 `}
                             {...moveToNext} />
                     </div>
-
-
                 </>
             </div>
         </div >

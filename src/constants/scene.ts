@@ -78,4 +78,4 @@ export const spotLightProps2 = {
     }
 }
 
-export const modelScaleValue = 2
+export const modelScaleValue = 3.5
