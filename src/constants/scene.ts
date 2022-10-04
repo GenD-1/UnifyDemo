@@ -20,7 +20,7 @@ export const orbitControlProps = {
     maxPolarAngle: ang2Rad(100),
     minAzimuthAngle: ang2Rad(-15),
     maxAzimuthAngle: ang2Rad(15),
-    maxDistance: 0.3,
+    maxDistance: 0.5,
     minDistance: 0.12,
 }
 
