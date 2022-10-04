@@ -127,15 +127,15 @@ export const Editor = ({ shareUrl }: any) => {
         setIsOpen(active);
     }
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(shareUrl)
-        setCopyModelOpen(true)
-        setTimeout(() => {
-            setCopyModelOpen(false)
-            handleModal(false)
-        }, 2000)
+    // const handleCopy = () => {
+    //     navigator.clipboard.writeText(shareUrl)
+    //     setCopyModelOpen(true)
+    //     setTimeout(() => {
+    //         setCopyModelOpen(false)
+    //         handleModal(false)
+    //     }, 2000)
 
-    }
+    // }
 
     return (
         <div className='h-[100%]'>
