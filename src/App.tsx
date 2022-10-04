@@ -18,7 +18,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App h-screen">
+    <div className="App" style={{ height: window.innerHeight - 10 }}>
       <Routes>
         <Route path="/" element={<EditorWraped roomName={roomName} />} />
         <Route path="/:id/:roomName" element={<EditorWraped roomName={roomName} />} />

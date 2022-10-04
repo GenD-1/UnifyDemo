@@ -91,6 +91,9 @@ const DragDesc = styled.div`
 
     animation: ${opacityAnimation1} 5s;
     animation-fill-mode: forwards;
+
+    pointer-events: none;
+    touch-action: none;
 `
 
 const customStyles = {
