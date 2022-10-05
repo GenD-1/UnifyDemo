@@ -8,19 +8,19 @@ export const cameraProps = {
     position: {
         x: 0,
         y: 0.08,
-        z: 0.3,
+        z: 0.4,
     }
 }
 
 export const backgroundColor = 0xfcfcfc
 
 export const orbitControlProps = {
-    target: [0, 0.08, 0],
+    target: [0, 0.09, 0],
     minPolarAngle: ang2Rad(80),
     maxPolarAngle: ang2Rad(100),
     minAzimuthAngle: ang2Rad(-15),
     maxAzimuthAngle: ang2Rad(15),
-    maxDistance: 0.5,
+    maxDistance: 0.7,
     minDistance: 0.12,
 }
 

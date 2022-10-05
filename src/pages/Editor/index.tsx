@@ -36,25 +36,18 @@ const CanvasWrapper = styled.div`
 
 const Area = styled.div`
     position: absolute;
-    // top: 0;
     background-color: #ffd70052;
-    // width: 25vw;
-    // height: 25vw;
     cursor: pointer;
     opacity: 1;
     bottom: 0;
 `
 
 const PrevArea = styled(Area)`
-    // display: block;
-    // left: 0;
-    // top:40%;
-
+    border-top-right-radius: 1rem;
 `
 
 const NextArea = styled(Area)`
-    // right: 0;
-    // top:40%;
+    border-top-left-radius: 1rem;
 `
 
 const LogoWrapper = styled.div`
@@ -209,7 +202,7 @@ export const Editor = ({ shareUrl }: any) => {
             </Modal>
 
 
-            <div className='overflow-hidden w-full sm:h-full h-[95%] flex flex-col '>
+            <div className='overflow-hidden w-full sm:h-full h-[100%] flex flex-col '>
                 <LogoWrapper className='flex justify-center items-center h-[30%] mt-[10]'>
                     <img src={'/assets/BrandLogo_Template.png'} alt='pic'></img>
                 </LogoWrapper>
@@ -234,7 +227,7 @@ export const Editor = ({ shareUrl }: any) => {
                 </div>
 
                 <CanvasWrapper
-                    className={`w-full h-[75%] relative flex justify-center items-center `}
+                    className={`w-full h-[100%] relative flex justify-center items-center `}
                 >
                     <div
                         className={`sceneWrapper`}
