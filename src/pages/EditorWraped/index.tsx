@@ -84,7 +84,7 @@ function EditorWraped({ roomName }: any) {
     }
 
     const fetchToken = async () => {
-        window.alert("hello")
+
         const Id = uuidv1()
         const response = await fetch(`https://prod-in2.100ms.live/hmsapi/unifymarketplace-audio.app.100ms.live/api/token`, {
             method: 'POST',
