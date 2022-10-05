@@ -10,6 +10,7 @@ import { chainModelProps, pendantsModelProps } from '../../constants'
 import { ZoomControl } from './CameraControl/ZoomControl'
 import { ang2Rad } from '../../helper/math'
 import { useUpdateMyPresence, useOthers } from '../../liveblocks.config'
+import { ResizeObserver } from '@juggle/resize-observer';
 
 
 
@@ -104,6 +105,7 @@ export const Scene = () => {
                 gl={{ antialias: true, alpha: true, }}
                 camera={{ fov: cameraProps.fov, position: [cameraProps.position.x, cameraProps.position.y, cameraProps.position.z] }}
                 shadows
+                resize={{ polyfill: ResizeObserver }}
             >
                 <Environment files={'/assets/hdr/evening_road_01_2k.hdr'} ></Environment>
 

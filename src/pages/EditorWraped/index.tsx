@@ -84,6 +84,7 @@ function EditorWraped({ roomName }: any) {
     }
 
     const fetchToken = async () => {
+
         const Id = uuidv1()
         const response = await fetch(`https://prod-in2.100ms.live/hmsapi/unifymarketplace-audio.app.100ms.live/api/token`, {
             method: 'POST',
@@ -107,7 +108,9 @@ function EditorWraped({ roomName }: any) {
     const handleJoint = async (token: any) => {
         await hmsActions.join({
             userName: 'result',
-            authToken: token
+            authToken: token,
+            alwaysRequestPermissions: true,
+            rememberDeviceSelection: true
         });
     }
 
@@ -127,7 +130,7 @@ function EditorWraped({ roomName }: any) {
             {
                 isConnected ?
                     <MicroPhone /> :
-                    <div className="control-bar container mx-auto fixed bottom-[3%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
+                    <div className="control-bar container mx-auto fixed bottom-[1%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
                         <button className="btn-control" onClick={fetchToken}>
                             Start
                         </button>

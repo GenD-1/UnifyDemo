@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@100mslive/react-sdk": "^0.4.0",
+    "@100mslive/react-sdk": "^0.4.1",
     "@fontsource/inter": "^4.5.11",
     "@fontsource/manrope": "^4.5.10",
+    "@juggle/resize-observer": "^3.4.0",
     "@liveblocks/client": "^0.18.0",
     "@liveblocks/react": "^0.18.0",
     "@react-spring/three": "^9.5.0",
