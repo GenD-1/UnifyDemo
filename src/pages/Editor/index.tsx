@@ -37,11 +37,12 @@ const CanvasWrapper = styled.div`
 const Area = styled.div`
     position: absolute;
     // top: 0;
-    // background-color: white;
+    background-color: #ffd70052;
     // width: 25vw;
     // height: 25vw;
     cursor: pointer;
     opacity: 1;
+    bottom: 0;
 `
 
 const PrevArea = styled(Area)`
@@ -91,7 +92,7 @@ const DragDesc = styled.div`
 
     animation: ${opacityAnimation1} 5s;
     animation-fill-mode: forwards;
-
+    
     pointer-events: none;
     touch-action: none;
 `
@@ -259,10 +260,10 @@ export const Editor = ({ shareUrl }: any) => {
                 <>
                     <div className={`top-0 w-11/12 h-11/12`}>
                         <PrevArea
-                            className={`block left-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 md:w-56 md:h-56  sm:w-44 sm:h-44 top-[70%] xl:top-[40%] md:top-[50%] w-24 h-24  `}
+                            className={`block left-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 md:w-56 md:h-56 sm:w-44 sm:h-44 w-20 h-20`}
                             {...moveToPrev} />
                         <NextArea
-                            className={`right-0 top-[70%] xl:top-[40%] md:top-[50%] xl:w-80 xl:h-80 lg:w-80 lg:h-72 2 md:w-56 md:h-56 sm:w-44 sm:h-44 w-24 h-24 `}
+                            className={`right-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 2 md:w-56 md:h-56 sm:w-44 sm:h-44 w-20 h-20`}
                             {...moveToNext} />
                     </div>
                 </>
