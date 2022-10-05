@@ -128,16 +128,25 @@ export const Editor = ({ shareUrl }: any) => {
 
     const others = useOthers();
 
-    const moveToPrev = useDoubleTap((event: any) => {
+    // const moveToPrev = useDoubleTap((event: any) => {
+    //     if (currentPage > 1)
+    //         moveToPrevPage()
+    // })
+
+    // const moveToNext = useDoubleTap((event: any) => {
+    //     if (currentPage < Math.ceil(pendantsModelProps.length / pendantShowCount))
+    //         moveToNextPage()
+    // })
+
+    const moveToPrev = (event: any) => {
         if (currentPage > 1)
             moveToPrevPage()
-    })
+    }
 
-    const moveToNext = useDoubleTap((event: any) => {
+    const moveToNext = (event: any) => {
         if (currentPage < Math.ceil(pendantsModelProps.length / pendantShowCount))
             moveToNextPage()
-    })
-
+    }
 
     const handleModal = (active: any) => {
         setIsOpen(active);
@@ -255,10 +264,14 @@ export const Editor = ({ shareUrl }: any) => {
                     <div className={`top-0 w-11/12 h-11/12`}>
                         <PrevArea
                             className={`block left-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 md:w-56 md:h-56 sm:w-44 sm:h-44 w-20 h-20`}
-                            {...moveToPrev} />
+                            onClick={ moveToPrev }
+                            // {...moveToPrev} 
+                        />
                         <NextArea
                             className={`right-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 2 md:w-56 md:h-56 sm:w-44 sm:h-44 w-20 h-20`}
-                            {...moveToNext} />
+                            onClick={ moveToNext }
+                            // {...moveToNext} 
+                        />
                     </div>
                 </>
             </div>
