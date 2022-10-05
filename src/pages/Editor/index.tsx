@@ -81,7 +81,8 @@ const opacityAnimation1 = keyframes`
     0% { opacity: 0; }
     25% { opacity: 1; }
     75% { opacity: 1; }
-    100% { opacity: 0; }
+    99% { opacity: 0; z-index: 1;}
+    100% { opacity: 0; z-index: -1; }
 `
 
 const DragDesc = styled.div`

@@ -19,7 +19,7 @@ function App() {
 
 
   return (
-    <div className="App" style={{ minHeight: '-webkit-fill-available', height: window.innerHeight}}>
+    <div className="App" style={{ minHeight: '-webkit-fill-available', height: window.innerHeight}} onClick={() => console.error('hehehe')}>
       <Routes>
         <Route path="/" element={<EditorWraped roomName={roomName} />} />
         <Route path="/:id/:roomName" element={<EditorWraped roomName={roomName} />} />
