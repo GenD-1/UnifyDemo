@@ -109,7 +109,8 @@ function EditorWraped({ roomName }: any) {
         await hmsActions.join({
             userName: 'result',
             authToken: token,
-            alwaysRequestPermissions: true
+            alwaysRequestPermissions: true,
+            rememberDeviceSelection: true
         });
     }
 
