@@ -242,11 +242,11 @@ export const Editor = ({ shareUrl }: any) => {
                         <Scene />
                     </div>
 
-                    { isModelLoaded ? (
+                    {/* { isModelLoaded ? (
                         <DragDesc>
                             {`Drag & Drop!`}
                         </DragDesc>
-                    ): null }
+                    ): null } */}
                 </CanvasWrapper>
 
                 {shareUrl &&
