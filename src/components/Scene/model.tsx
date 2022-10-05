@@ -40,7 +40,7 @@ export const Model = ({
 
         const curPosition = [
             0.08 * (-1 + posIndex) + diffOffset,
-            small ? -0.05 : 0,
+            small ? -0.05 + 0.05 : 0 + 0.05,
             0
         ]
 
