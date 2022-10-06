@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
-import { RoomProvider, useMap } from "../../liveblocks.config";
+import { Suspense, useEffect, useState } from "react";
+
+import Avatar from '../../components/Avatar/Avatar';
+import { COLORS_PRESENCE } from '../../constants';
+import { RoomProvider, useMap, useMyPresence, useOthers } from "../../liveblocks.config";
 import Editor from '../Editor';
 import { LiveMap } from "@liveblocks/client";
 import { v1 as uuidv1 } from 'uuid';
@@ -7,9 +10,9 @@ import {
     selectIsConnectedToRoom,
     useHMSActions,
     useHMSStore,
-    selectIsLocalAudioEnabled
+    useAVToggle
 } from "@100mslive/react-sdk";
-import AudioButton from "../../components/Testing/MicroPhone";
+import MicroPhone from "../../components/Testing/MicroPhone";
 
 
 function Room({ url }: any) {
@@ -26,7 +29,7 @@ function Room({ url }: any) {
 function PageShow({ shareUrl }: any) {
     const shapes = useMap("shapes");
 
-    if(shapes === null || shapes === undefined) {
+    if (shapes === null || shapes === undefined) {
         return (
             <div className="loading">
                 <img src="https://liveblocks.io/loading.svg" alt="Loading" />
@@ -40,16 +43,15 @@ function PageShow({ shareUrl }: any) {
 function EditorWraped({ roomName }: any) {
 
     const isConnected = useHMSStore(selectIsConnectedToRoom);
-    const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
     const hmsActions = useHMSActions();
 
     const [shareUrl, setShareUrl] = useState('')
     const [roomId, setRoomId] = useState('')
 
     useEffect(() => {
-        console.log(isConnected)
+
         window.onunload = () => {
-            if(isConnected) {
+            if (isConnected) {
                 hmsActions.leave();
             }
         };
@@ -57,24 +59,15 @@ function EditorWraped({ roomName }: any) {
     }, [hmsActions, isConnected]);
 
     useEffect(() => {
-        initialCall()
-    }, [])
-
-    useEffect(()=> {
-        if(roomId) {
-            fetchToken()
-        }
-    },[roomId])
-
-    const initialCall = async () => {
         let currentUrl = (window.location.href).split('/')
 
-        if(currentUrl[3] === '') {
-            await fetchRoomId();
+        if (currentUrl[3] === '') {
+            fetchRoomId();
         } else {
             setRoomId(currentUrl[3]);
         }
-    }
+
+    }, [])
 
 
     const fetchRoomId = async () => {
@@ -92,7 +85,6 @@ function EditorWraped({ roomName }: any) {
 
     const fetchToken = async () => {
 
-
         const Id = uuidv1()
         const response = await fetch(`https://prod-in2.100ms.live/hmsapi/unifymarketplace-audio.app.100ms.live/api/token`, {
             method: 'POST',
@@ -109,6 +101,7 @@ function EditorWraped({ roomName }: any) {
         let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomId + "/" + roomName
         console.log(newUrl);
         setShareUrl(newUrl)
+
         handleJoint(token)
     }
 
@@ -117,9 +110,7 @@ function EditorWraped({ roomName }: any) {
             userName: 'result',
             authToken: token,
             alwaysRequestPermissions: true,
-            settings: {
-                isAudioMuted: true,
-            },
+            rememberDeviceSelection: true
         });
     }
 
@@ -137,13 +128,13 @@ function EditorWraped({ roomName }: any) {
             }
 
             {
-                isConnected &&
-                <AudioButton
-                    active={isLocalAudioEnabled}
-                    onClick={() => {
-                        hmsActions.setLocalAudioEnabled(!isLocalAudioEnabled);
-                    }}
-                />
+                isConnected ?
+                    <MicroPhone /> :
+                    <div className="control-bar container mx-auto fixed bottom-[1%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
+                        <button className="btn-control" onClick={fetchToken}>
+                            Start
+                        </button>
+                    </div>
             }
         </div >
     );
