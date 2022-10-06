@@ -83,6 +83,8 @@ function EditorWraped({ roomName }: any) {
     }
 
     const fetchToken = async () => {
+
+
         const Id = uuidv1()
         const response = await fetch(`https://prod-in2.100ms.live/hmsapi/unifymarketplace-audio.app.100ms.live/api/token`, {
             method: 'POST',
@@ -99,7 +101,7 @@ function EditorWraped({ roomName }: any) {
         let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomId + "/" + roomName
         console.log(newUrl);
         setShareUrl(newUrl)
-
+        await hmsActions.unblockAudio();
         handleJoint(token)
     }
 
