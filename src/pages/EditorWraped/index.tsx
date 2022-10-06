@@ -49,7 +49,7 @@ function EditorWraped({ roomName }: any) {
     const [roomId, setRoomId] = useState('')
 
     useEffect(() => {
-
+        console.log(isConnected)
         window.onunload = () => {
             if (isConnected) {
                 hmsActions.leave();
