@@ -57,7 +57,6 @@ function EditorWraped({ roomName }: any) {
     }, [hmsActions, isConnected]);
 
     useEffect(() => {
-        fetchToken()
         let currentUrl = (window.location.href).split('/')
 
         if(currentUrl[3] === '') {
@@ -65,7 +64,7 @@ function EditorWraped({ roomName }: any) {
         } else {
             setRoomId(currentUrl[3]);
         }
-
+        fetchToken()
     }, [])
 
 
