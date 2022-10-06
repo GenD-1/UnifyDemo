@@ -1,8 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
-
-import Avatar from '../../components/Avatar/Avatar';
-import { COLORS_PRESENCE } from '../../constants';
-import { RoomProvider, useMap, useMyPresence, useOthers } from "../../liveblocks.config";
+import { useEffect, useState } from "react";
+import { RoomProvider, useMap } from "../../liveblocks.config";
 import Editor from '../Editor';
 import { LiveMap } from "@liveblocks/client";
 import { v1 as uuidv1 } from 'uuid';
@@ -10,9 +7,9 @@ import {
     selectIsConnectedToRoom,
     useHMSActions,
     useHMSStore,
-    useAVToggle
+    selectIsLocalAudioEnabled
 } from "@100mslive/react-sdk";
-import MicroPhone from "../../components/Testing/MicroPhone";
+import AudioButton from "../../components/Testing/MicroPhone";
 
 
 function Room({ url }: any) {
@@ -29,7 +26,7 @@ function Room({ url }: any) {
 function PageShow({ shareUrl }: any) {
     const shapes = useMap("shapes");
 
-    if (shapes === null || shapes === undefined) {
+    if(shapes === null || shapes === undefined) {
         return (
             <div className="loading">
                 <img src="https://liveblocks.io/loading.svg" alt="Loading" />
@@ -43,6 +40,7 @@ function PageShow({ shareUrl }: any) {
 function EditorWraped({ roomName }: any) {
 
     const isConnected = useHMSStore(selectIsConnectedToRoom);
+    const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
     const hmsActions = useHMSActions();
 
     const [shareUrl, setShareUrl] = useState('')
@@ -51,7 +49,7 @@ function EditorWraped({ roomName }: any) {
     useEffect(() => {
 
         window.onunload = () => {
-            if (isConnected) {
+            if(isConnected) {
                 hmsActions.leave();
             }
         };
@@ -59,9 +57,10 @@ function EditorWraped({ roomName }: any) {
     }, [hmsActions, isConnected]);
 
     useEffect(() => {
+        fetchToken()
         let currentUrl = (window.location.href).split('/')
 
-        if (currentUrl[3] === '') {
+        if(currentUrl[3] === '') {
             fetchRoomId();
         } else {
             setRoomId(currentUrl[3]);
@@ -107,7 +106,10 @@ function EditorWraped({ roomName }: any) {
     const handleJoint = async (token: any) => {
         await hmsActions.join({
             userName: 'result',
-            authToken: token
+            authToken: token,
+            settings: {
+                isAudioMuted: true,
+            },
         });
     }
 
@@ -125,13 +127,13 @@ function EditorWraped({ roomName }: any) {
             }
 
             {
-                isConnected ?
-                    <MicroPhone /> :
-                    <div className="control-bar container mx-auto fixed bottom-[3%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
-                        <button className="btn-control" onClick={fetchToken}>
-                            Start
-                        </button>
-                    </div>
+                isConnected &&
+                <AudioButton
+                    active={isLocalAudioEnabled}
+                    onClick={() => {
+                        hmsActions.setLocalAudioEnabled(!isLocalAudioEnabled);
+                    }}
+                />
             }
         </div >
     );
