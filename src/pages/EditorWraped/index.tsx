@@ -47,7 +47,7 @@ function EditorWraped({ roomName }: any) {
     const [roomId, setRoomId] = useState('')
 
     useEffect(() => {
-
+        console.log(isConnected)
         window.onunload = () => {
             if(isConnected) {
                 hmsActions.leave();
@@ -109,7 +109,6 @@ function EditorWraped({ roomName }: any) {
         let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomId + "/" + roomName
         console.log(newUrl);
         setShareUrl(newUrl)
-        await hmsActions.unblockAudio();
         handleJoint(token)
     }
 
@@ -117,6 +116,7 @@ function EditorWraped({ roomName }: any) {
         await hmsActions.join({
             userName: 'result',
             authToken: token,
+            alwaysRequestPermissions: true,
             settings: {
                 isAudioMuted: true,
             },
