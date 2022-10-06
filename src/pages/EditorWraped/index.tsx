@@ -57,15 +57,24 @@ function EditorWraped({ roomName }: any) {
     }, [hmsActions, isConnected]);
 
     useEffect(() => {
+        initialCall()
+    }, [])
+
+    useEffect(()=> {
+        if(roomId) {
+            fetchToken()
+        }
+    },[roomId])
+
+    const initialCall = async () => {
         let currentUrl = (window.location.href).split('/')
 
         if(currentUrl[3] === '') {
-            fetchRoomId();
+            await fetchRoomId();
         } else {
             setRoomId(currentUrl[3]);
         }
-        fetchToken()
-    }, [])
+    }
 
 
     const fetchRoomId = async () => {
