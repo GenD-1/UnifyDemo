@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Mic, MicOff } from "react-feather";
 
 const Participant = ({ participant, isOwner }) => {
 
     const [audioTracks, setAudioTracks] = useState([]);
-    const [isAudioMute, setIsAudioMute] = useState(false);
+    const [isAudioMute, setIsAudioMute] = useState(true);
 
 
     const audioRef = useRef();
@@ -76,7 +77,7 @@ const Participant = ({ participant, isOwner }) => {
         <div className="participant" onClick={muteAudio}  >
             {/* <h3>{participant.identity}</h3>           */}
             {!isOwner && <audio ref={audioRef} autoPlay={true} muted={false} />}
-            {isOwner && <button >{isAudioMute ? "mute" : "unMute"}</button>}
+            {isOwner && <button >{isAudioMute ? <MicOff size={25} /> : <Mic size={25} />}</button>}
         </div>
     );
 };

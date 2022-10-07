@@ -37,26 +37,11 @@ function MicroPhone({ roomName, room, handleLogout }) {
 
 
 
-  // const [checkFirstTimeAudioEnable, setCheckFirstTimeAudioEnable] = useState(false)
-  // const {
-  //   isLocalAudioEnabled,
-  //   toggleAudio
-  // } = useAVToggle();
-
-  // useEffect(() => {
-  //   if (isLocalAudioEnabled && !checkFirstTimeAudioEnable) {
-  //     toggleAudio()
-  //     setCheckFirstTimeAudioEnable(true)
-  //   }
-  // }, [isLocalAudioEnabled])
 
 
   return (
     <div className="control-bar  container mx-auto fixed bottom-[1%] sm:bottom-[7%]  sm:right-1 w-[60%] sm:w-[6.8%] right-0  text-sm"
-    // width: 70px;
-    // position: absolute;
-    // bottom: 10%;
-    // right: 0;"
+
     >
       {room ? (
         <>
