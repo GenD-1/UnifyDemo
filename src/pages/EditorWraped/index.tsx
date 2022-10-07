@@ -83,6 +83,8 @@ function EditorWraped({ roomName }: any) {
 
             Video.connect(data.token, {
                 name: roomName,
+                video: false,
+                audio: true
             })
                 .then((room: any) => {
                     setConnecting(false);
