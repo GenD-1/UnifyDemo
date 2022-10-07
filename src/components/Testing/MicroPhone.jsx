@@ -1,21 +1,54 @@
 import { useAVToggle } from "@100mslive/react-sdk";
 import { useEffect, useState } from "react";
 import { Mic, MicOff } from 'react-feather'
+import Participant from "./Participant";
 
-function MicroPhone() {
+function MicroPhone({ roomName, room, handleLogout }) {
+  const [participants, setParticipants] = useState([]);
 
-  const [checkFirstTimeAudioEnable, setCheckFirstTimeAudioEnable] = useState(false)
-  const {
-    isLocalAudioEnabled,
-    toggleAudio
-  } = useAVToggle();
 
   useEffect(() => {
-    if (isLocalAudioEnabled && !checkFirstTimeAudioEnable) {
-      toggleAudio()
-      setCheckFirstTimeAudioEnable(true)
-    }
-  }, [isLocalAudioEnabled])
+    const participantConnected = (participant) => {
+      setParticipants((prevParticipants) => [...prevParticipants, participant]);
+    };
+
+    const participantDisconnected = (participant) => {
+      setParticipants((prevParticipants) =>
+        prevParticipants.filter((p) => p !== participant)
+      );
+    };
+
+
+
+
+    room.on("participantConnected", participantConnected);
+    room.on("participantDisconnected", participantDisconnected);
+    room.participants.forEach(participantConnected);
+    return () => {
+      room.off("participantConnected", participantConnected);
+      room.off("participantDisconnected", participantDisconnected);
+    };
+  }, [room]);
+
+
+  const remoteParticipants = participants.map((participant) => (
+    <Participant key={participant.sid} participant={participant} />
+  ));
+
+
+
+  // const [checkFirstTimeAudioEnable, setCheckFirstTimeAudioEnable] = useState(false)
+  // const {
+  //   isLocalAudioEnabled,
+  //   toggleAudio
+  // } = useAVToggle();
+
+  // useEffect(() => {
+  //   if (isLocalAudioEnabled && !checkFirstTimeAudioEnable) {
+  //     toggleAudio()
+  //     setCheckFirstTimeAudioEnable(true)
+  //   }
+  // }, [isLocalAudioEnabled])
 
 
   return (
@@ -25,14 +58,19 @@ function MicroPhone() {
     // bottom: 10%;
     // right: 0;"
     >
-      <button className="btn-control" onClick={toggleAudio}>
-        {/* {isLocalAudioEnabled ? "Mute" : "Unmute"} */}
-        {isLocalAudioEnabled ?
-          <Mic size={25} />
-          :
-          <MicOff size={25} />
-        }
-      </button>
+      {room ? (
+        <>
+          <Participant
+            key={room.localParticipant.sid}
+            participant={room.localParticipant}
+            isOwner={true}
+          />
+        </>
+      ) : (
+        ""
+      )}
+      <div className="remote-participants">{remoteParticipants}</div>
+
     </div>
   );
 }
