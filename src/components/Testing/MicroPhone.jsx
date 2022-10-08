@@ -40,7 +40,7 @@ function MicroPhone({ roomName, room, handleLogout }) {
 
 
   return (
-    <div className="control-bar  container mx-auto fixed bottom-[1%] sm:bottom-[7%]  sm:right-1 w-[60%] sm:w-[6.8%] right-0  text-sm"
+    <div className="control-bar container mx-auto fixed bottom-[1%] w-fit right-[50%] text-sm"
 
     >
       {room ? (
