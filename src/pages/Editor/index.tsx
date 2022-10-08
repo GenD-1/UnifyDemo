@@ -10,7 +10,8 @@ import { LiveObject } from "@liveblocks/client";
 import { Shape } from 'three'
 import Avatar from '../../components/Avatar/Avatar'
 import { COLORS_PRESENCE } from '../../constants';
-import CopyToClipboard from "react-copy-to-clipboard"
+import CopyToClipboard from "react-copy-to-clipboard";
+import { Share2 } from 'react-feather'
 
 
 
@@ -244,18 +245,20 @@ export const Editor = ({ shareUrl }: any) => {
                         <Scene />
                     </div>
 
-                    { isModelLoaded ? (
+                    {isModelLoaded ? (
                         <DragDesc>
                             {`Drag & Drop!`}
                         </DragDesc>
-                    ): null }
+                    ) : null}
                 </CanvasWrapper>
 
                 {shareUrl &&
-                    <ActionWrapper className={`right-2 md:right-4 lg:right-4 w-[46%]  sm:w-[8%] md:w-[7%] `}>
-                        <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm text-xs font-bold'>
-                            <img src='/assets/ShareIcon.png' alt='pic' className={'sm:w-[45%] w-45%'}></img>
-                            Share
+                    <ActionWrapper className={`sm:w-[8%] md:w-[7%] bottom-[2%] w-fit right-[42%] `}>
+                        <button onClick={() => handleModal(true)} className='flex flex-col justify-center items-center text-sm font-bold'>
+                            {/* <img src='/assets/ShareIcon.png' alt='pic' className={'sm:w-[45%] w-45%'}></img> */}
+                            <Share2 size={25} />
+
+
                         </button>
                     </ActionWrapper>
 
@@ -264,13 +267,13 @@ export const Editor = ({ shareUrl }: any) => {
                     <div className={`top-0 w-11/12 h-11/12`}>
                         <PrevArea
                             className={`block left-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 md:w-56 md:h-56 sm:w-44 sm:h-44 w-20 h-20`}
-                            onClick={ moveToPrev }
-                            // {...moveToPrev} 
+                            onClick={moveToPrev}
+                        // {...moveToPrev} 
                         />
                         <NextArea
                             className={`right-0 xl:w-80 xl:h-80 lg:w-80 lg:h-72 2 md:w-56 md:h-56 sm:w-44 sm:h-44 w-20 h-20`}
-                            onClick={ moveToNext }
-                            // {...moveToNext} 
+                            onClick={moveToNext}
+                        // {...moveToNext} 
                         />
                     </div>
                 </>

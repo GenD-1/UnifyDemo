@@ -20,7 +20,7 @@ function Room({ url }: any) {
 
     return (
         <div
-            className="container mx-auto h-[100%]"
+            className="container mx-auto h-[100%] justify-center items-center flex"
         >
             <PageShow shareUrl={url} />
         </div>
@@ -168,7 +168,7 @@ function EditorWraped({ roomName }: any) {
             {
                 room ?
                     <MicroPhone roomName={roomName} room={room} handleLogout={handleLogout} /> :
-                    <div className="control-bar container mx-auto fixed bottom-[1%] sm:bottom-[11%] md:bottom-[9%] sm:right-1 sm:w-[7%] w-[60%] right-0  text-sm">
+                    <div className="control-bar container mx-auto fixed bottom-[1%] w-fit right-[50%]  sm:bottom-[11%] md:bottom-[1%]  text-sm">
                         <button className="btn-control" onClick={handleSubmit}>
                             Start
                         </button>
@@ -180,3 +180,7 @@ function EditorWraped({ roomName }: any) {
 
 
 export default EditorWraped
+
+// right: 50%;
+// width: fit-content;
+// background-color: red;

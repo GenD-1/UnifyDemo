@@ -74,10 +74,10 @@ const Participant = ({ participant, isOwner }) => {
     }
 
     return (
-        <div className="participant" onClick={muteAudio}  >
+        <div className="participant w-fit" onClick={muteAudio}  >
             {/* <h3>{participant.identity}</h3>           */}
             {!isOwner && <audio ref={audioRef} autoPlay={true} muted={false} />}
-            {isOwner && <button >{isAudioMute ? <MicOff size={25} /> : <Mic size={25} />}</button>}
+            {isOwner && <button className="p-1">{isAudioMute ? <MicOff size={20} /> : <Mic size={20} />}</button>}
         </div>
     );
 };
