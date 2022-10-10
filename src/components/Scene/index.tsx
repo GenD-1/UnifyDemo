@@ -27,17 +27,13 @@ export const Scene = () => {
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
-    // useEffect(() => {
-    //     setModelPage(currentPage)
-    // }, [currentPage])
+    useEffect(() => {
+        if (modelPosition.id !== '123') {
+            onPointerMove()
+        }
+    }, [modelPosition, currentPage])
 
-    const onPointerMove = (event: any) => {
-
-
-        // if (modelPage !== currentPage) {
-        //     setModelPosition({ id: '123', position: { x: 0, y: 0, z: 0 } })
-        // }
-
+    const onPointerMove = () => {
         updateMyPresence({
             cursor: {
                 x: Number(pointerRef?.current?.getAzimuthalAngle()),
@@ -57,7 +53,8 @@ export const Scene = () => {
 
 
     const onPointerLeave = () => {
-        updateMyPresence({ cursor: null })
+        console.log('onPointerLeave');
+
     }
 
     const others = useOthers()
