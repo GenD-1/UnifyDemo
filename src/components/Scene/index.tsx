@@ -31,7 +31,7 @@ export const Scene = () => {
         if (modelPosition.id !== '123') {
             onPointerMove()
         }
-    }, [modelPosition, currentPage])
+    }, [modelPosition || currentPage])
 
     const onPointerMove = () => {
         updateMyPresence({
