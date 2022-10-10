@@ -57,7 +57,7 @@ export const Scene = () => {
 
 
     const onPointerLeave = () => {
-        updateMyPresence({ cursor: null, model: null })
+        updateMyPresence({ cursor: null })
     }
 
     const others = useOthers()
