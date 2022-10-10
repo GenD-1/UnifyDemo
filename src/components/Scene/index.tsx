@@ -28,10 +28,8 @@ export const Scene = () => {
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
     useEffect(() => {
-        if (modelPosition.id !== '123') {
-            onPointerMove()
-        }
-    }, [modelPosition || currentPage])
+        onPointerMove()
+    }, [modelPosition])
 
     const onPointerMove = () => {
         updateMyPresence({
@@ -53,8 +51,9 @@ export const Scene = () => {
 
 
     const onPointerLeave = () => {
-        console.log('onPointerLeave');
-
+        updateMyPresence({
+            cursor: null,
+        })
     }
 
     const others = useOthers()
@@ -139,7 +138,7 @@ export const Scene = () => {
                         <Model
                             key={`pendantsmodel${index}`}
                             url={item.src}
-                            scale={ item.small ? [scaleValue, scaleValue, scaleValue] : [scaleValue / 1.5, scaleValue / 1.5, scaleValue / 1.5]}
+                            scale={item.small ? [scaleValue, scaleValue, scaleValue] : [scaleValue / 1.5, scaleValue / 1.5, scaleValue / 1.5]}
                             drawable={item.drawable}
                             page={item.page}
                             index={item.pageIndex}
