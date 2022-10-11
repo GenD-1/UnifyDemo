@@ -37,7 +37,7 @@ export const Scene = () => {
                 afterUpdate()
             }, 1000);
         }
-    }, [dragInfo || currentPage])
+    }, [dragInfo,currentPage])
 
     const afterUpdate = () => {
         let x = -0.009906075189990607
