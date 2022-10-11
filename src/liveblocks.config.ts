@@ -1,8 +1,8 @@
 import { createClient } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
 
-let PUBLIC_KEY = "pk_test_JqWErj18ywwTmifQ7Ifu__es"; // when push code
-// let PUBLIC_KEY = "pk_dev_KORYEfRtM_26701WjT-f4y8_"; // when develop
+// let PUBLIC_KEY = "pk_test_JqWErj18ywwTmifQ7Ifu__es"; // when push code
+let PUBLIC_KEY = "pk_dev_KORYEfRtM_26701WjT-f4y8_"; // when develop
 
 if (!/^pk_(live|test)/.test(PUBLIC_KEY)) {
     console.warn(
