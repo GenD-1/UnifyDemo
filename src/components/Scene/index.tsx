@@ -27,15 +27,42 @@ export const Scene = () => {
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
-    useEffect(() => {
-        onPointerMove()
-    }, [modelPosition])
-
     // useEffect(() => {
-    //     if (dragInfo.isDragging === false) {
-    //         onPointerMove()
-    //     }
-    // }, [dragInfo])
+    //     onPointerMove()
+    // }, [modelPosition])
+
+    useEffect(() => {
+        if (dragInfo.isDragging === false) {
+            setTimeout(() => {
+                afterUpdate()
+            }, 1000);
+        }
+    }, [dragInfo])
+
+    const afterUpdate = () => {
+        let x = -0.009906075189990607
+        let y = 1.3962634015954636
+
+        updateMyPresence({
+            cursor: {
+                x: x,
+                y: y
+            },
+            model: {
+                id: modelPosition.id,
+                positon: {
+                    x: modelPosition.position.x,
+                    y: modelPosition.position.y,
+                    z: modelPosition.position.z
+                }
+            },
+            currentPage: currentPage
+        })
+
+        pointerRef?.current?.setAzimuthalAngle(x)
+        pointerRef?.current?.setPolarAngle(y)
+
+    }
 
     const onPointerMove = () => {
         updateMyPresence({
