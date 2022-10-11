@@ -27,11 +27,11 @@ export const Scene = () => {
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
-    useEffect(() => {
-        if (dragInfo.isDragging === false) {
-            onPointerMove()
-        }
-    }, [dragInfo])
+    // useEffect(() => {
+    //     if (dragInfo.isDragging === false) {
+    //         onPointerMove()
+    //     }
+    // }, [dragInfo])
 
     const onPointerMove = () => {
         updateMyPresence({
@@ -55,6 +55,14 @@ export const Scene = () => {
     const onPointerLeave = () => {
         updateMyPresence({
             cursor: null,
+            model: {
+                id: modelPosition.id,
+                positon: {
+                    x: modelPosition.position.x,
+                    y: modelPosition.position.y,
+                    z: modelPosition.position.z
+                }
+            },            
         })
     }
 
