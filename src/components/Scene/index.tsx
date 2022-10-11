@@ -27,11 +27,13 @@ export const Scene = () => {
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
-    // useEffect(() => {
-    //     setModelPage(currentPage)
-    // }, [currentPage])
+    useEffect(() => {
+        if (modelPosition.id !== '123') {
+            onPointerMove()
+        }
+    }, [modelPosition])
 
-    const onPointerMove = (event: any) => {
+    const onPointerMove = () => {
         updateMyPresence({
             cursor: {
                 x: Number(pointerRef?.current?.getAzimuthalAngle()),
