@@ -22,7 +22,7 @@ export const Scene = () => {
 
     const updateMyPresence = useUpdateMyPresence()
     const [updatePosition, setUpdatePosition] = useState({})
-    const [updateModelId, setUpdateModelId] = useState(0)
+    const [updateModelId, setUpdateModelId] = useState(null)
     const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
@@ -32,12 +32,6 @@ export const Scene = () => {
     // }, [currentPage])
 
     const onPointerMove = (event: any) => {
-
-
-        // if (modelPage !== currentPage) {
-        //     setModelPosition({ id: '123', position: { x: 0, y: 0, z: 0 } })
-        // }
-
         updateMyPresence({
             cursor: {
                 x: Number(pointerRef?.current?.getAzimuthalAngle()),
@@ -142,7 +136,7 @@ export const Scene = () => {
                         <Model
                             key={`pendantsmodel${index}`}
                             url={item.src}
-                            scale={ item.small ? [scaleValue, scaleValue, scaleValue] : [scaleValue / 1.5, scaleValue / 1.5, scaleValue / 1.5]}
+                            scale={item.small ? [scaleValue, scaleValue, scaleValue] : [scaleValue / 1.5, scaleValue / 1.5, scaleValue / 1.5]}
                             drawable={item.drawable}
                             page={item.page}
                             index={item.pageIndex}
