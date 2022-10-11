@@ -60,7 +60,7 @@ export const Model = ({
     }, [currentPage])
 
     useEffect(() => {
-        if (getPosition.x || getPosition.y || getPosition.z) {
+        if (getPosition.x !== undefined || getPosition.y !== undefined || getPosition.z !== undefined) {
             api.start({
                 position: [
                     getPosition.x,

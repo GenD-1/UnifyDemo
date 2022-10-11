@@ -22,16 +22,16 @@ export const Scene = () => {
 
     const updateMyPresence = useUpdateMyPresence()
     const [updatePosition, setUpdatePosition] = useState({})
-    const [updateModelId, setUpdateModelId] = useState(0)
+    const [updateModelId, setUpdateModelId] = useState(null)
     const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
-    useEffect(() => {
-        onPointerMove()
-    }, [modelPosition])
+    // useEffect(() => {
+    //     setModelPage(currentPage)
+    // }, [currentPage])
 
-    const onPointerMove = () => {
+    const onPointerMove = (event: any) => {
         updateMyPresence({
             cursor: {
                 x: Number(pointerRef?.current?.getAzimuthalAngle()),
