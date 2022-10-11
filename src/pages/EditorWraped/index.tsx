@@ -66,7 +66,7 @@ function EditorWraped({ roomName }: any) {
         async (event: any) => {
             event.preventDefault();
             setConnecting(true);
-            const data = await fetch("https://twilioaudiobackend.herokuapp.com/join-room", {
+            const data = await fetch("https://backend-unify.herokuapp.com/join-room", {
                 method: "POST",
                 body: JSON.stringify({
 
