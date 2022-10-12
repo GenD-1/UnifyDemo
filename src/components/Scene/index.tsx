@@ -14,7 +14,7 @@ import { ResizeObserver } from '@juggle/resize-observer';
 
 
 
-export const Scene = () => {
+export const Scene = ({ pagechange, pageNumber }: any) => {
     const dragInfo = useStore((state: any) => state.dragInfo)
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
@@ -27,9 +27,13 @@ export const Scene = () => {
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
 
-    // useEffect(() => {
-    //     onPointerMove()
-    // }, [modelPosition])
+    useEffect(() => {
+        if (pagechange === true) {
+            setTimeout(() => {
+                afterUpdate()
+            }, 1000);
+        }
+    }, [pagechange])
 
     useEffect(() => {
         if (dragInfo.isDragging === false) {
@@ -37,7 +41,7 @@ export const Scene = () => {
                 afterUpdate()
             }, 1000);
         }
-    }, [dragInfo,currentPage])
+    }, [dragInfo])
 
     const afterUpdate = () => {
         let x = -0.009906075189990607
@@ -57,6 +61,10 @@ export const Scene = () => {
                 }
             },
             currentPage: currentPage
+        })
+
+        setCurrentPage({
+            page: pageNumber
         })
 
         pointerRef?.current?.setAzimuthalAngle(x)

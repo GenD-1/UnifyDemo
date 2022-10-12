@@ -126,6 +126,7 @@ export const Editor = ({ shareUrl }: any) => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [copyModelOpen, setCopyModelOpen] = useState(false)
     const [copied, setCopied] = useState(false) as any
+    const [pageChange, setPageChange] = useState(false)
 
     const others = useOthers();
 
@@ -142,11 +143,19 @@ export const Editor = ({ shareUrl }: any) => {
     const moveToPrev = (event: any) => {
         if (currentPage > 1)
             moveToPrevPage()
+        setPageChange(true)
+        setTimeout(() => {
+            setPageChange(false)
+        }, 500);
     }
 
     const moveToNext = (event: any) => {
         if (currentPage < Math.ceil(pendantsModelProps.length / pendantShowCount))
             moveToNextPage()
+        setPageChange(true)
+        setTimeout(() => {
+            setPageChange(false)
+        }, 500);
     }
 
     const handleModal = (active: any) => {
@@ -242,7 +251,10 @@ export const Editor = ({ shareUrl }: any) => {
                     <div
                         className={`sceneWrapper`}
                     >
-                        <Scene />
+                        <Scene
+                            pagechange={pageChange}
+                            pageNumber={currentPage}
+                        />
                     </div>
 
                     {isModelLoaded ? (
