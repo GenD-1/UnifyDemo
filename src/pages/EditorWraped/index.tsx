@@ -113,6 +113,17 @@ function EditorWraped({ roomName }: any) {
         });
     }, []);
 
+    // useEffect(() => {
+    //     let currentUrl = (window.location.href).split('/')
+
+    //     if (currentUrl[3] === '') {
+    //         fetchRoomId();
+    //     } else {
+    //         setRoomId(currentUrl[3]);
+    //     }
+
+    // }, [])
+
     useEffect(() => {
         if (room) {
             const tidyUp = (event: any) => {
