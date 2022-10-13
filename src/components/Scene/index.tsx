@@ -36,7 +36,7 @@ export const Scene = ({ pagechange }: any) => {
         if (dragInfo.isDragging === false) {
             console.log('dasdasdddddddddddddddddddddddddddddddddd');
             setTimeout(() => {
-                document.getElementById('canvasview')?.click()
+                onPointerMove()
             }, 1000);
         }
     }, [dragInfo])
