@@ -35,9 +35,7 @@ export const Scene = ({ pagechange }: any) => {
     useEffect(() => {
         if (dragInfo.isDragging === false) {
             console.log('dasdasdddddddddddddddddddddddddddddddddd');
-            alert('true true')
-            // setIsFirst(true)
-            onPointerMove()
+            document.getElementById('canvasview')?.click()
         }
     }, [dragInfo])
 
@@ -126,8 +124,14 @@ export const Scene = ({ pagechange }: any) => {
 
     }
 
+    const handleClick = () => {
+        onPointerMove()
+    }
+
     return (
         <div onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}
+            onClick={handleClick}
+            id='canvasview'
             style={{
                 position: 'relative',
                 width: '100%',
@@ -137,6 +141,7 @@ export const Scene = ({ pagechange }: any) => {
             }}>
 
             {others.map(showOther)}
+
             <Canvas
                 gl={{ antialias: true, alpha: true, }}
                 camera={{ fov: cameraProps.fov, position: [cameraProps.position.x, cameraProps.position.y, cameraProps.position.z] }}
