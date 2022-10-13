@@ -45,6 +45,8 @@ export const Scene = ({ pagechange }: any) => {
         if (isFirst === true) {
             x = -0.009906075189990607
             y = 1.3962634015954636
+            pointerRef?.current?.setAzimuthalAngle(x)
+            pointerRef?.current?.setPolarAngle(y)
             setIsFirst(false)
         } else {
             x = Number(pointerRef?.current?.getAzimuthalAngle())
