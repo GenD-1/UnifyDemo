@@ -126,13 +126,8 @@ export const Scene = ({ pagechange }: any) => {
 
     }
 
-    const handleClick = () => {
-        onPointerMove()
-    }
-
     return (
         <div onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}
-            onClick={handleClick}
             id='canvasview'
             style={{
                 position: 'relative',
