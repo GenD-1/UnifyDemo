@@ -145,10 +145,10 @@ function EditorWraped({ roomName }: any) {
 
 
 
-    // const handleOkk = () => {
-    //     let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomName
-    //     setShareUrl(newUrl)
-    // }
+    const handleOkk = () => {
+        let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomName
+        setShareUrl(newUrl)
+    }
 
 
 
