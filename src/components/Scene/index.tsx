@@ -35,7 +35,9 @@ export const Scene = ({ pagechange }: any) => {
     useEffect(() => {
         if (dragInfo.isDragging === false) {
             console.log('dasdasdddddddddddddddddddddddddddddddddd');
-            document.getElementById('canvasview')?.click()
+            setTimeout(() => {
+                document.getElementById('canvasview')?.click()
+            }, 1000);
         }
     }, [dragInfo])
 
