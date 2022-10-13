@@ -14,39 +14,42 @@ import { ResizeObserver } from '@juggle/resize-observer';
 
 
 
-export const Scene = ({ pagechange, pageNumber }: any) => {
+export const Scene = ({ pagechange }: any) => {
     const dragInfo = useStore((state: any) => state.dragInfo)
     const focusInfo = useStore((state: any) => state.focusInfo)
     const scaleValue = modelScaleValue
     const pointerRef = useRef() as any
-
     const updateMyPresence = useUpdateMyPresence()
     const [updatePosition, setUpdatePosition] = useState({})
     const [updateModelId, setUpdateModelId] = useState(null)
     const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
+    const [isFirst, setIsFirst] = useState(false)
+    const [otherFirst, setOtherFirst] = useState(true)
 
     useEffect(() => {
-        if (pagechange === true) {
-            setTimeout(() => {
-                afterUpdate()
-            }, 1000);
-        }
+        onPointerMove()
     }, [pagechange])
 
     useEffect(() => {
         if (dragInfo.isDragging === false) {
-            setTimeout(() => {
-                afterUpdate()
-            }, 1000);
+            setIsFirst(true)
+            onPointerMove()
         }
     }, [dragInfo])
 
-    const afterUpdate = () => {
-        let x = -0.009906075189990607
-        let y = 1.3962634015954636
-
+    const onPointerMove = () => {
+        let x;
+        let y;
+        if (isFirst === true) {
+            x = -0.009906075189990607
+            y = 1.3962634015954636
+            setIsFirst(false)
+        } else {
+            x = Number(pointerRef?.current?.getAzimuthalAngle())
+            y = Number(pointerRef?.current?.getPolarAngle())
+        }
         updateMyPresence({
             cursor: {
                 x: x,
@@ -60,33 +63,8 @@ export const Scene = ({ pagechange, pageNumber }: any) => {
                     z: modelPosition.position.z
                 }
             },
-            currentPage: currentPage
-        })
-
-        setCurrentPage({
-            page: pageNumber
-        })
-
-        pointerRef?.current?.setAzimuthalAngle(x)
-        pointerRef?.current?.setPolarAngle(y)
-
-    }
-
-    const onPointerMove = () => {
-        updateMyPresence({
-            cursor: {
-                x: Number(pointerRef?.current?.getAzimuthalAngle()),
-                y: Number(pointerRef?.current?.getPolarAngle())
-            },
-            model: {
-                id: modelPosition.id,
-                positon: {
-                    x: modelPosition.position.x,
-                    y: modelPosition.position.y,
-                    z: modelPosition.position.z
-                }
-            },
-            currentPage: currentPage
+            currentPage: pagechange,
+            pageNumber: currentPage,
         })
     }
 
@@ -106,13 +84,30 @@ export const Scene = ({ pagechange, pageNumber }: any) => {
         const x = presence.cursor.x;
         const y = presence.cursor.y;
 
-        const page = presence.currentPage
+        const newpage = presence.currentPage;
 
-        if (currentPage !== page) {
+        const page = presence.pageNumber
+
+        if (newpage === 'prev' && currentPage !== page) {
             setCurrentPage({
                 page
             })
         }
+        else if (newpage === 'next' && currentPage !== page) {
+            setCurrentPage({
+                page
+            })
+        } else if (otherFirst === true && currentPage !== page) {
+            setCurrentPage({
+                page
+            })
+            setOtherFirst(false)
+        }
+        // else if (currentPage !== page) {
+        //         setCurrentPage({
+        //             page
+        //         })
+        // }
 
         if (presence?.model?.id !== "123" && currentPage === page) {
             setTimeout(() => {

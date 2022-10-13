@@ -24,7 +24,8 @@ type Presence = {
         id: string,
         positon: { x: number, y: number, z: number }
     } | null;
-    currentPage: number | null
+    currentPage: any | null;
+    pageNumber: any | null;
 }
 
 export const {

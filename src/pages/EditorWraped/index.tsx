@@ -76,7 +76,6 @@ function EditorWraped({ roomName }: any) {
                     "Content-Type": "application/json",
                 },
             }).then((res) => {
-                console.log(res);
                 return res.json()
             });
 
@@ -89,9 +88,7 @@ function EditorWraped({ roomName }: any) {
                 .then((room: any) => {
                     setConnecting(false);
                     setRoom(room);
-                    console.log("Room", room)
                     let newUrl = window.location.protocol + "//" + window.location.host + "/" + room.sid + "/" + roomName
-                    console.log(newUrl);
                     setShareUrl(newUrl)
 
                 })
@@ -157,7 +154,7 @@ function EditorWraped({ roomName }: any) {
         <div className='h-[97%]'>
             {roomName &&
 
-                <RoomProvider id={roomName} initialPresence={{ cursor: null, model: null, currentPage: null }} initialStorage={{ shapes: new LiveMap(), }}>
+                <RoomProvider id={roomName} initialPresence={{ cursor: null, model: null, currentPage: null, pageNumber: null }} initialStorage={{ shapes: new LiveMap(), }}>
 
                     <Room url={shareUrl} />
 
