@@ -33,7 +33,12 @@ export const Scene = ({ pagechange }: any) => {
     }, [pagechange])
 
     useEffect(() => {
-        onPointerMove()
+        if (dragInfo.isDragging === false) {
+            console.log('dasdasdddddddddddddddddddddddddddddddddd');
+            alert('true true')
+            // setIsFirst(true)
+            onPointerMove()
+        }
     }, [dragInfo])
 
     const onPointerMove = () => {
