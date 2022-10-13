@@ -25,16 +25,15 @@ export const Scene = ({ pagechange }: any) => {
     const [modelPosition, setModelPosition] = useState({ id: '123', position: { x: 0, y: 0, z: 0 } })
     const currentPage = useStore((state: any) => state.currentPage)
     const setCurrentPage = useStore((state: any) => state.setCurrentPage)
-    const [isFirst, setIsFirst] = useState(false)
     const [otherFirst, setOtherFirst] = useState(true)
 
     useEffect(() => {
         onPointerMove()
+        setModelPosition({ id: '123', position: { x: 0, y: 0, z: 0 } })
     }, [pagechange])
 
     useEffect(() => {
         if (dragInfo.isDragging === false) {
-            console.log('dasdasdddddddddddddddddddddddddddddddddd');
             setTimeout(() => {
                 onPointerMove()
             }, 1000);
@@ -44,16 +43,10 @@ export const Scene = ({ pagechange }: any) => {
     const onPointerMove = () => {
         let x;
         let y;
-        // if (isFirst === true) {
-        //     x = -0.009906075189990607
-        //     y = 1.3962634015954636
-        //     pointerRef?.current?.setAzimuthalAngle(x)
-        //     pointerRef?.current?.setPolarAngle(y)
-        //     setIsFirst(false)
-        // } else {
+
         x = Number(pointerRef?.current?.getAzimuthalAngle())
         y = Number(pointerRef?.current?.getPolarAngle())
-        // }
+
         updateMyPresence({
             cursor: {
                 x: x,
@@ -84,7 +77,7 @@ export const Scene = ({ pagechange }: any) => {
         if (!presence?.cursor) {
             return null
         }
-
+        
         const x = presence.cursor.x;
         const y = presence.cursor.y;
 
@@ -107,11 +100,6 @@ export const Scene = ({ pagechange }: any) => {
             })
             setOtherFirst(false)
         }
-        // else if (currentPage !== page) {
-        //         setCurrentPage({
-        //             page
-        //         })
-        // }
 
         if (presence?.model?.id !== "123" && currentPage === page) {
             setTimeout(() => {
