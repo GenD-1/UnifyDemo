@@ -113,6 +113,17 @@ function EditorWraped({ roomName }: any) {
         });
     }, []);
 
+    // useEffect(() => {
+    //     let currentUrl = (window.location.href).split('/')
+
+    //     if (currentUrl[3] === '') {
+    //         fetchRoomId();
+    //     } else {
+    //         setRoomId(currentUrl[3]);
+    //     }
+
+    // }, [])
+
     useEffect(() => {
         if (room) {
             const tidyUp = (event: any) => {
@@ -134,10 +145,10 @@ function EditorWraped({ roomName }: any) {
 
 
 
-    // const handleOkk = () => {
-    //     let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomName
-    //     setShareUrl(newUrl)
-    // }
+    const handleOkk = () => {
+        let newUrl = window.location.protocol + "//" + window.location.host + "/" + roomName
+        setShareUrl(newUrl)
+    }
 
 
 
@@ -158,7 +169,7 @@ function EditorWraped({ roomName }: any) {
                 room ?
                     <MicroPhone roomName={roomName} room={room} handleLogout={handleLogout} /> :
                     <div className="control-bar container mx-auto fixed bottom-[1%] w-fit right-[50%]  sm:bottom-[11%] md:bottom-[1%]  text-sm">
-                        <button className="btn-control" onClick={handleSubmit}>
+                        <button className="btn-control" onClick={handleOkk}>
                             Start
                         </button>
                     </div>
